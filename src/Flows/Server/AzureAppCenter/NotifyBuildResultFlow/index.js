@@ -12,12 +12,12 @@ class NotifyBuildResultFlow {
   }
 
   async run() {
-    const { app_name, build_status } = this.data;
+    const { app_name, build_status, build_id } = this.data;
     const slackRepository = SlackRepository.getRepositoryData(APPS[app_name].repo);
     const { deployChannel } = slackRepository;
 
     return await Slack.getInstance().sendMessage({
-      message:`Build Status: ${build_status}`,
+      message:`The build #${build_id} was finished with status: ${build_status}`,
       channel: deployChannel,
     });
   };
