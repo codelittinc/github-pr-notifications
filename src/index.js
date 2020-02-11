@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import { SlackRepository } from '@services';
 import { PullRequest } from './models';
+import DesignFlow from './Flows/Design/DesignFlow';
 import GithubFlow from './Flows/Repository/Github/GithubFlow';
 import ReleaseFlow from './Flows/Repository/Github/ReleaseFlow';
 import ServerFlow from './Flows/Server/ServerFlow';
@@ -168,11 +169,14 @@ const processFlow = (req, res, Flow) => {
   flow.run()
   console.log(`End: ${flowName}`)
   res.sendStatus(200);
-
-} 
+}
 
 app.post('/notify-deploy', (req, res) => {
   processFlow(req, res, ServerFlow)
+})
+
+app.post('/notify-figma-comment', (req, res) => {
+  processFlow(req, res, DesignFlow)
 })
 
 app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))

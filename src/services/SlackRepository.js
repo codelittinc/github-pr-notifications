@@ -83,6 +83,10 @@ const repositoriesIdentifiers = {
     supports_deploy: false,
     servers: ['dev-codelitt-blog']
   },
+  'test-channel': {
+    channel: 'test-channel',
+    owner: 'codelittinc'
+  },
 }
 
 const ghToSlackUsers = {
