@@ -6,12 +6,12 @@ class NotifyFigmaCommentFlow {
   }
 
   async run() {
-    const { app, figmaComment } = this.data;
+    const { app, figmaComment, author, fileUrl } = this.data;
     const slackRepository = SlackRepository.getRepositoryData(app);
     const { channel } = slackRepository;
 
     return await Slack.getInstance().sendMessage({
-      message:`There is a new comment on figma: ${figmaComment}`,
+      message:`*Figma*: There is a new comment from ${author} on ${fileUrl}: ${figmaComment}`,
       channel: channel,
     });
   };
