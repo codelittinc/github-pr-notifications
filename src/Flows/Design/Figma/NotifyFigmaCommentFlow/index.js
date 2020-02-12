@@ -1,4 +1,4 @@
-import { SlackRepository, Slack } from '@services'
+import { Slack } from '@services'
 
 class NotifyFigmaCommentFlow {
   constructor(data) {
@@ -6,18 +6,17 @@ class NotifyFigmaCommentFlow {
   }
 
   async run() {
-    const { app, figmaComment, author, fileUrl } = this.data;
-    const slackRepository = SlackRepository.getRepositoryData(app);
-    const { channel } = slackRepository;
+    const { channel, comment, file } = this.data;
 
     return await Slack.getInstance().sendMessage({
-      message:`*Figma*: There is a new comment from ${author} on ${fileUrl}: ${figmaComment}`,
+      message:
+        `*Figma*: There is a new comment from ${comment.author} on the file ${file.name}: ${comment.message} \nlink: ${file.url}`,
       channel: channel,
     });
   };
 
   isFlow() {
-    return !!this.data.figmaComment;
+    return !!this.data.comment;
   };
 }
 

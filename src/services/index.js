@@ -1,6 +1,7 @@
 import ChannelMessage from './ChannelMessage';
 import Database from './Database';
 import DirectMessage from './DirectMessage';
+import Figma  from './Figma';
 import Github  from './Github';
 import Reactji  from './Reactji';
 import Slack  from './Slack';
@@ -10,6 +11,7 @@ export {
   ChannelMessage,
   Database,
   DirectMessage,
+  Figma,
   Github,
   Reactji,
   Slack,
