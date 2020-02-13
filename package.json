@@ -25,6 +25,7 @@
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "moment": "^2.24.0",
     "mongodb": "^3.4.1",
     "slack-notifications-client": "git://github.com/codelittinc/slack-notifications-client.git"
   },

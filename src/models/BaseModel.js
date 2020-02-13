@@ -39,6 +39,13 @@ class BaseModel {
   }
 
   // Class methods
+  static async insertMany(documents) {
+    const collection = await Database.getCollection(this.collectionName);
+    const response = await collection.insertMany(documents);
+
+    return response.ops.map(a => new this(a))
+  }
+
   static async list(query = {}) {
     const collection = await Database.getCollection(this.collectionName);
     const response = await collection.find(query);
@@ -48,9 +55,9 @@ class BaseModel {
     return array.map(a => new this(a))
   }
 
-  static async findBy(query) {
+  static async findBy(query, options = {}) {
     const collection = await Database.getCollection(this.collectionName);
-    const response = await collection.findOne(query);
+    const response = await collection.findOne(query, options);
     if (!response) {
       return null;
     }
