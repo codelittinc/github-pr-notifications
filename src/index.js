@@ -177,12 +177,14 @@ app.post('/notify-deploy', (req, res) => {
 
 app.post('/notify-figma-comment', async (req, res) => {
   console.log('Start: DesignFlow');
-  const comments = await new Figma().getFilesComments();
-  comments.forEach((comment) => {
-    const designFlow = new DesignFlow(comment);
-    designFlow.run();
-  });
-  console.log('End: DesignFlow');
+  (async function () {
+    const comments = await new Figma().getFilesComments();
+    comments.forEach((comment) => {
+      const designFlow = new DesignFlow(comment);
+      designFlow.run();
+    });
+    console.log('End: DesignFlow');
+  })();
 
   res.sendStatus(200);
 })

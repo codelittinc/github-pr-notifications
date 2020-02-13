@@ -17,7 +17,6 @@ class Figma {
   }
 
   async getProjectsFiles() {
-    console.log('Listing figma projects\' files');
     const projectsInfo = this.getProjects();
 
     const files = Object.keys(projectsInfo).map(async (projectName) => {
@@ -63,12 +62,10 @@ class Figma {
 
   async getFilesComments() {
     const files = await this.getProjectsFiles();
-    console.log('Listing figma files\' comments');
     const comments = files.map(async ({ file, ...projectInfo }) => {
       const fileComments = await this.figmaClient.listComments(file.key);
       const newComments = await this.removeOldComments(file.key, fileComments.comments);
 
-      console.log(`${file.name} new comments: ${newComments.length}`);
 
       return newComments.map(comment => ({
         file,
