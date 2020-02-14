@@ -5,11 +5,11 @@ const repositoriesIdentifiers = {
   },
   'Team-Blackbird': {
     id: '2136589',
-    channel: 'team-blackbird',
+    channel: 'feed-blackbird',
   },
   'Team-Rolli': {
     id: '3673059',
-    channel: 'team-rolli',
+    channel: 'feed-rolli',
   },
   'Team-Sales-Marketing': {
     id: '2087651',
@@ -21,23 +21,23 @@ const repositoriesIdentifiers = {
   },
   'Team-Maker': {
     id: '3123941',
-    channel: 'team-teammaker',
+    channel: 'feed-teammaker',
   },
   'Team-Codelitt-Website': {
     id: '3468738',
-    channel: 'team-website',
+    channel: 'feed-website',
   },
   'Team-Web-CMS': {
     id: '1872015',
-    channel: 'team-acst-websites',
+    channel: 'feed-acst-websites',
   },
   'Team-Video-Streaming': {
     id: '2539181',
-    channel: 'team-video-stream',
+    channel: 'feed-video-stream',
   },
   'Team-Zonda': {
     id: '3825282',
-    channel: 'team-zonda',
+    channel: 'feed-zonda',
   },
 }
 
