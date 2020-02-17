@@ -3,7 +3,6 @@ dotenv.config()
 
 import bodyParser from 'body-parser';
 import express from 'express';
-import { Figma, SlackRepository } from '@services';
 import { PullRequest } from './models';
 import DesignFlow from './Flows/Design/DesignFlow';
 import GithubFlow from './Flows/Repository/Github/GithubFlow';
@@ -173,20 +172,6 @@ const processFlow = (req, res, Flow) => {
 
 app.post('/notify-deploy', (req, res) => {
   processFlow(req, res, ServerFlow)
-})
-
-app.post('/notify-figma-comment', async (req, res) => {
-  console.log('Start: DesignFlow');
-  (async function () {
-    const comments = await new Figma().getFilesComments();
-    comments.forEach((comment) => {
-      const designFlow = new DesignFlow(comment);
-      designFlow.run();
-    });
-    console.log('End: DesignFlow');
-  })();
-
-  res.sendStatus(200);
 })
 
 app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))
