@@ -39,9 +39,10 @@ class NewPullRequestFlow {
     const lastCheckRun = await CheckRun.findLastStateForCommits(commitsShas);
     const lastCheckRunState = lastCheckRun ? lastCheckRun.state : null;
 
-    const reactji = new Reactji(ts, lastCheckRunState, channel, 'ci')
-
-    reactji.react()
+    if (lastCheckRunState) {
+      const reactji = new Reactji(ts, lastCheckRunState, channel, 'ci')
+      reactji.react()
+    }
 
     if (lastCheckRun) {
       pr.updateCIState(lastCheckRun.state)
