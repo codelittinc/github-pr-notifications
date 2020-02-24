@@ -7,18 +7,71 @@ const getUrl = (path) => {
   return `https://api.todoist.com/sync/v8/sync?token=${TODOIST_KEY}${path}`;
 }
 
+const reviewProjectDaily = {
+  "Mon": "AY",
+  "Tue": "Rolli",
+  "Wed": "ACS",
+  "Thu": "Internal"
+};
+
 const taskTemplates = [
   {
     projectName: "Codelitt Recurring",
+    due: 'today at 9am', 
     task: {
-      name: "Review Rolli"
+      name: "Start day"
     },
     subtasks: [
       {
-        name: "User Check Run"
-      }
+        name: "Start Toggle",
+      },
+      {
+        name: "Review work mentions",
+      },
+      {
+        name: "Review PRs",
+      },
+      {
+        name: "Clean emails",
+      },
     ]
-  }
+  },
+  {
+    projectName: "Codelitt Recurring",
+    due: 'today at 5pm', 
+    task: {
+      name: "End day"
+    },
+    subtasks: [
+      {
+        name: "Stop Toggle",
+      },
+      {
+        name: "Review PRs",
+      },
+    ]
+  },
+  {
+    projectName: "Codelitt Recurring",
+    due: 'today at 9am', 
+    task: {
+      name: `Review Project ${reviewProjectDaily[new Date().toLocaleString('en-us', {  weekday: 'short' })]}`
+    },
+    subtasks: [
+      {
+        name: "Review from an user perspective",
+      },
+      {
+        name: "Review project designs",
+      },
+      {
+        name: "Review git commit history",
+      },
+      {
+        name: "Review cards to see if the devs have the information they need",
+      },
+    ]
+  },
 ];
 
 class Todoist {
@@ -33,8 +86,10 @@ class Todoist {
     return projects.filter(p => p.name === name)[0];
   }
 
-  static async createTask(name, projectId, parentId) {
-    const url = getUrl(`&commands=[{"type": "item_add", "temp_id": "${uuid.v4()}", "uuid": "${uuid.v4()}", "args": {"content": "${name}", "project_id": ${projectId}, "parent_id": "${parentId}"}}]`);
+  static async createTask(name, projectId, due, parentId) {
+    const url = getUrl(
+      `&commands=[{"type": "item_add", "temp_id": "${uuid.v4()}", "uuid": "${uuid.v4()}", "args": {"content": "${name}", "project_id": ${projectId}, "parent_id": "${parentId}", "due": {"string": "${due}"}}}]`
+      );
     const response = await axios.get(url);
     return response.data;
 
@@ -42,14 +97,14 @@ class Todoist {
   static async run() {
     for (const template of taskTemplates) {
 
-      const { task, subtasks, projectName } = template;
+      const { task, subtasks, projectName, due } = template;
       const project = await this.getProjectByName(projectName);
 
-      const todoistTask = await this.createTask(task.name, project.id);
+      const todoistTask = await this.createTask(task.name, project.id, due);
       const parentId = Object.keys(todoistTask.temp_id_mapping)[0]
 
       subtasks.forEach((subtask) => {
-        this.createTask(subtask.name, project.id, parentId);
+        this.createTask(subtask.name, project.id, due, parentId);
       })
     }
   }
