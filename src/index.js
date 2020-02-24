@@ -15,8 +15,6 @@ const app = express()
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 
-addTestEndpoints(app)
-
 const PORT = process.env.PORT || 3000
 
 const processFlowRequest = async (req, res) => {
@@ -36,6 +34,8 @@ const processFlowRequest = async (req, res) => {
 
   res.sendStatus(200)
 }
+
+addTestEndpoints(app, processFlowRequest);
 
 app.post('/', (req, res) => {
   processFlowRequest(req, res)

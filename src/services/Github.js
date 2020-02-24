@@ -66,6 +66,22 @@ class Github {
 
     return pull.data;
   }
+
+  static async deleteBranch({
+    owner,
+    repo,
+    ref,
+  }) {
+    const octokit = new Octokit({
+      auth: process.env.GIT_AUTH
+    });
+
+    await octokit.git.deleteRef({
+      owner,
+      repo,
+      ref,
+    });
+  }
 }
 
 export default Github;
