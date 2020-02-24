@@ -4,7 +4,6 @@ dotenv.config()
 import bodyParser from 'body-parser';
 import express from 'express';
 import { PullRequest } from './models';
-import DesignFlow from './Flows/Design/DesignFlow';
 import GithubFlow from './Flows/Repository/Github/GithubFlow';
 import ReleaseFlow from './Flows/Repository/Github/ReleaseFlow';
 import ServerFlow from './Flows/Server/ServerFlow';

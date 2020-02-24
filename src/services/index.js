@@ -10,7 +10,6 @@ export {
   ChannelMessage,
   Database,
   DirectMessage,
-  Figma,
   Github,
   Reactji,
   Slack,
