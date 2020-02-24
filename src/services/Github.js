@@ -79,7 +79,7 @@ class Github {
     await octokit.git.deleteRef({
       owner,
       repo,
-      ref,
+      ref: `heads/${ref}`,
     });
   }
 }
