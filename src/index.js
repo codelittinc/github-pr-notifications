@@ -7,6 +7,7 @@ import { PullRequest } from './models';
 import GithubFlow from './Flows/Repository/Github/GithubFlow';
 import ReleaseFlow from './Flows/Repository/Github/ReleaseFlow';
 import ServerFlow from './Flows/Server/ServerFlow';
+import { SlackRepository} from './services'
 
 import addTestEndpoints from './addTestEndpoints';
 
