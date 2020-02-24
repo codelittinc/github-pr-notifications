@@ -1,4 +1,10 @@
 const repositoriesIdentifiers = {
+  'roadrunner': {
+    devGroup: '@engineers',
+    channel: 'team-automations-dev',
+    owner: 'codelittinc',
+    supports_deploy: false
+  },
   'gh-hooks-repo-test': {
     devGroup: '@elbigode',
     channel: 'test-gh',
