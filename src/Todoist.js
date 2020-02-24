@@ -16,7 +16,7 @@ const reviewProjectDaily = {
 
 const taskTemplates = [
   {
-    projectName: "Codelitt Recurring",
+    projectName: "work",
     due: 'today at 9am',
     task: {
       name: "Start day"
@@ -40,7 +40,7 @@ const taskTemplates = [
     ]
   },
   {
-    projectName: "Codelitt Recurring",
+    projectName: "work",
     due: 'today at 5pm',
     task: {
       name: "End day"
@@ -55,7 +55,7 @@ const taskTemplates = [
     ]
   },
   {
-    projectName: "Codelitt Recurring",
+    projectName: "work",
     due: 'today at 9am',
     task: {
       name: `Review Project ${reviewProjectDaily[new Date().toLocaleString('en-us', { weekday: 'short' })]}`
