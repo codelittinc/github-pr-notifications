@@ -174,4 +174,14 @@ app.post('/notify-deploy', (req, res) => {
   processFlow(req, res, ServerFlow)
 })
 
+import Todoist from './Todoist';
+app.get('/todoist', async (req, res) => {
+  Todoist.run()
+
+  
+  res.send({
+    status: 200,
+  })
+})
+
 app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))
