@@ -22,8 +22,10 @@ class ChannelMessage {
     return await this.send(message)
   }
 
-  async notifyNewMessage() {
-    const message = `${SlackReaction.speech_balloon.forMessage()} There is a new message!`;
+  async notifyNewMessage(mention) {
+    const begin = mention ? `Hey ${mention}` : SlackReaction.speech_balloon.forMessage();
+    const end = mention ? ' for you!' : '!'
+    const message = `${begin} There is a new message${end}`;
     return await this.send(message)
   }
 

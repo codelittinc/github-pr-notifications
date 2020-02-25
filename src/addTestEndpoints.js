@@ -7,8 +7,14 @@ import newFullPrJson from './payload-examples/newFullPR.json';
 import newChangeJson from './payload-examples/newPush.json';
 import submitReviewChangesApproved from './payload-examples/submitReviewChangesApproved.json';
 import submitReviewChangesRequested from './payload-examples/submitReviewChangesRequested.json';
+import newPRComment from './payload-examples/newPRComment.json';
 
 export default (app, resolve) => {
+  app.get('/new-pr-comment', async (req, res) => {
+    resolve({
+      body: newPRComment,
+    }, res)
+  })
   app.get('/test-new-full-pr', async (req, res) => {
     resolve({
       body: newFullPrJson,

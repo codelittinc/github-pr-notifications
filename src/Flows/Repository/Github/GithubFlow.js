@@ -5,6 +5,7 @@ import NewReviewSubmissionFlow from './NewReviewSubmissionFlow';
 import SendChangelogFlow from './SendChangelogFlow';
 import CheckRunFlow from './CheckRunFlow';
 import ReleaseFlow from './ReleaseFlow';
+import NewPullRequestDirectCommentFlow from './NewPullRequestDirectCommentFlow';
 
 class GithubFlow {
   static async getFlow(json) {
@@ -22,6 +23,8 @@ class GithubFlow {
       return CheckRunFlow;
     } else if (await ReleaseFlow.isFlow(json)) {
       return ReleaseFlow;
+    } else if (await NewPullRequestDirectCommentFlow.isFlow(json)) {
+      return NewPullRequestDirectCommentFlow;
     };
   };
 }
