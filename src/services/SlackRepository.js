@@ -54,7 +54,7 @@ const repositoriesIdentifiers = {
     channel: 'team-ay-dev',
     owner: 'codelittinc'
   },
-  'ay-the-hub': {
+  'ay-pia-web': {
     devGroup: '@ay-desktop-devs',
     channel: 'team-ay-pia-web-dev',
     owner: 'codelittinc'
