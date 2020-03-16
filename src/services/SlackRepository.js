@@ -56,7 +56,7 @@ const repositoriesIdentifiers = {
   },
   'ay-the-hub': {
     devGroup: '@ay-devs',
-    channel: 'team-ay-dev',
+    channel: 'team-ay-pia-web-dev',
     owner: 'codelittinc'
   },
   'ay-excel-import-api': {
