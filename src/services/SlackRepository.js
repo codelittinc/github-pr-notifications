@@ -109,6 +109,10 @@ const ghToSlackUsers = {
   tolastarras: 'rafael.sobrino',
   victor0402: 'victor.carvalho',
   ascinocco: 'anthony.scinocco',
+  mvillalba2016: 'mauricio',
+  pvieiraguimaraes: 'pedro',
+  'Manuel-Lajo-Salazar': 'manuel',
+  jacksonpires: 'jackson'
 };
 
 const getRepositoryData = (repositoryName) => repositoriesIdentifiers[repositoryName];
