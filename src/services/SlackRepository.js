@@ -46,38 +46,38 @@ const repositoriesIdentifiers = {
   },
   'ay-design-library': {
     devGroup: '@ay-devs',
-    channel: 'team-ay-dev',
+    channel: 'team-ay-pia-web-dev',
     owner: 'codelittinc'
   },
   'ay-properties-api': {
-    devGroup: '@ay-devs',
+    devGroup: '@ay-backend-devs',
     channel: 'team-ay-dev',
     owner: 'codelittinc'
   },
   'ay-the-hub': {
-    devGroup: '@ay-devs',
+    devGroup: '@ay-desktop-devs',
     channel: 'team-ay-pia-web-dev',
     owner: 'codelittinc'
   },
   'ay-excel-import-api': {
-    devGroup: '@ay-devs',
+    devGroup: '@ay-backend-devs',
     channel: 'team-ay-dev',
     owner: 'codelittinc'
   },
   'ay-excel-import-app': {
-    devGroup: '@ay-devs',
+    devGroup: '@ay-backend-devs',
     channel: 'team-ay-dev',
     owner: 'codelittinc'
   },
   'ay-property-intelligence': {
-    devGroup: '@ay-devs',
+    devGroup: '@ay-mobile-devs',
     channel: 'team-ay-pia-dev',
     deployChannel: 'team-ay-pia-deploy',
     owner: 'codelittinc',
     supports_deploy: true
   },
   'ay-users-api': {
-    devGroup: '@ay-devs',
+    devGroup: '@ay-backend-devs',
     channel: 'team-ay-dev',
     owner: 'codelittinc'
   },
