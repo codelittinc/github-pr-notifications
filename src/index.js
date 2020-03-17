@@ -8,6 +8,9 @@ import GithubFlow from './Flows/Repository/Github/GithubFlow';
 import ReleaseFlow from './Flows/Repository/Github/ReleaseFlow';
 import ServerFlow from './Flows/Server/ServerFlow';
 import { SlackRepository} from './services'
+import {
+  HomeController
+} from './controllers';
 
 import addTestEndpoints from './addTestEndpoints';
 
@@ -16,6 +19,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 
 const PORT = process.env.PORT || 3000
+
+app.get('/', HomeController.index)
 
 const processFlowRequest = async (req, res) => {
   const json = req.body;
@@ -39,13 +44,6 @@ addTestEndpoints(app, processFlowRequest);
 
 app.post('/', (req, res) => {
   processFlowRequest(req, res)
-})
-
-app.get('/', async (req, res) => {
-  res.send({
-    status: 200,
-    configuration: SlackRepository.data
-  })
 })
 
 const getPullRequestsJSON = async (prs) => {
