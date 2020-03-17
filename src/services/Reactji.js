@@ -16,8 +16,9 @@ class Reactji {
     this.type = type;
   }
 
-  // @TODO: reimplement clean reactions
-  react(cleanReactions) {
+  react() {
+    if (!this.state) { return; }
+
     const reactionKey = `${this.type}${this.state[0].toUpperCase()}${this.state.slice(1)}`
     const reaction = STATES[reactionKey]
 

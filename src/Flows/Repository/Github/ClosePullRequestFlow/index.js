@@ -44,7 +44,7 @@ class ClosePullRequestFlow {
     });
 
     const reactji = new Reactji(mainSlackMessage.ts, 'closed', channel, 'flow')
-    reactji.react(true);
+    reactji.react();
 
     const directMessage = new DirectMessage(pr.username)
     directMessage.notifyPRMerge(pr)
