@@ -6,10 +6,10 @@ import express from 'express';
 import { PullRequest } from './models';
 import GithubFlow from './Flows/Repository/Github/GithubFlow';
 import ReleaseFlow from './Flows/Repository/Github/ReleaseFlow';
-import ServerFlow from './Flows/Server/ServerFlow';
 import { SlackRepository} from './services'
 import {
-  HomeController
+  HomeController,
+  DeployNotificationController
 } from './controllers';
 
 import addTestEndpoints from './addTestEndpoints';
@@ -21,6 +21,7 @@ app.use(bodyParser.urlencoded());
 const PORT = process.env.PORT || 3000
 
 app.get('/', HomeController.index)
+app.post('/notify-deploy', DeployNotificationController.create);
 
 const processFlowRequest = async (req, res) => {
   const json = req.body;
@@ -155,21 +156,6 @@ app.post('/deploy', async (req, res) => {
     ]
   }
   res.send(blocks);
-})
-
-const processFlow = (req, res, Flow) => {
-  const json = req.body;
-  const flow = new Flow(json);
-
-  const flowName = flow.constructor.name;
-  console.log(`Start: ${flowName}`)
-  flow.run()
-  console.log(`End: ${flowName}`)
-  res.sendStatus(200);
-}
-
-app.post('/notify-deploy', (req, res) => {
-  processFlow(req, res, ServerFlow)
 })
 
 app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))
