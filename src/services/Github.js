@@ -82,6 +82,26 @@ class Github {
       ref: `heads/${ref}`,
     });
   }
+
+  static async compareBranchesCommits({
+    owner,
+    repo,
+    base,
+    head
+  }) {
+    const octokit = new Octokit({
+      auth: process.env.GIT_AUTH
+    });
+
+    const response = await octokit.repos.compareCommits({
+      owner,
+      repo,
+      base,
+      head
+    })
+
+    return response.data;
+  }
 }
 
 export default Github;

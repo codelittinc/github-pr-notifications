@@ -103,7 +103,15 @@ class ReleaseFlow {
   };
 
   static async isFlow(json) {
-    return json.text === 'update qa';
+    const { text } = json;
+
+    if (!text) {
+      return;
+    }
+
+    const [action] = text.split(' ')
+
+    return action === 'update';
   };
 }
 

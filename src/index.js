@@ -49,16 +49,15 @@ app.post('/', (req, res) => {
   processFlowRequest(req, res)
 })
 
-app.post('/deploy', async (req, res) => {
+app.post('/slack-actions', async (req, res) => {
   const json = req.body;
-  const Flow = ReleaseFlow;
+  const Flow = await GithubFlow.getFlow(json)
 
-  const flowName = Flow.name;
-  console.log(`Start: ${flowName}`)
   const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(json.channel_name);
   let message;
 
   let stop;
+
   if (repositoryData && repositoryData.supports_deploy) {
     message = 'ok';
   } else {
@@ -66,12 +65,16 @@ app.post('/deploy', async (req, res) => {
     stop = true;
   }
 
-  if (json.text !== 'update qa' && json.text !== 'update prod') {
+  if (!Flow) {
     stop = true;
     message = 'Please enter valid instructions.'
   }
 
+
   if (!stop) {
+    const flowName = Flow.name;
+
+    console.log(`Start: ${flowName}`)
     Flow.start(json)
   }
 
