@@ -16,7 +16,7 @@ const reviewProjectDaily = {
 
 const taskTemplates = [
   {
-    projectName: "work",
+    projectName: "👨‍🚀 Work",
     due: 'today at 9am',
     task: {
       name: "Start day"
@@ -26,32 +26,32 @@ const taskTemplates = [
         name: "Start Toggle",
       },
       {
-        name: "Review calendar and prepare tasks for any meeting",
-      },
-      {
-        name: "Review work mentions",
-      },
-      {
         name: "Review PRs",
+      },
+      {
+        name: "Review calendar and prepare tasks for any meeting",
       },
       {
         name: "Clean emails",
       },
+      {
+        name: "Review work mentions",
+      },
     ]
   },
   {
-    projectName: "work",
+    projectName: "👨‍🚀 Work",
     due: 'today at 5pm',
     task: {
       name: "End day"
     },
     subtasks: [
       {
-        name: "Stop Toggle",
-      },
-      {
         name: "Review PRs",
       },
+      {
+        name: "Stop Toggle",
+      }
     ]
   },
   {
@@ -126,9 +126,9 @@ class Todoist {
       const todoistTask = await this.createTask(task.name, project.id, due);
       const parentId = Object.keys(todoistTask.temp_id_mapping)[0]
 
-      subtasks.forEach((subtask) => {
-        this.createTask(subtask.name, project.id, undefined, parentId);
-      })
+      for (const subtask of subtasks) {
+        await this.createTask(subtask.name, project.id, undefined, parentId);
+      }
     }
   }
 }
