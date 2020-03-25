@@ -5,6 +5,7 @@ import NewReviewSubmissionFlow from './NewReviewSubmissionFlow';
 import SendChangelogFlow from './SendChangelogFlow';
 import CheckRunFlow from './CheckRunFlow';
 import ReleaseFlow from './ReleaseFlow';
+import TagReleaseFlow from './TagReleaseFlow';
 import RepositoryDiffFlow from './RepositoryDiffFlow';
 import NewPullRequestDirectCommentFlow from './NewPullRequestDirectCommentFlow';
 
@@ -28,7 +29,10 @@ class GithubFlow {
       return NewPullRequestDirectCommentFlow;
     } else if (await RepositoryDiffFlow.isFlow(json)) {
       return RepositoryDiffFlow;
+    } else if (await TagReleaseFlow.isFlow(json)) {
+      return TagReleaseFlow;
     };
+
   };
 }
 

@@ -61,7 +61,7 @@ class Github {
       owner,
       repo,
       pull_number: number,
-//      merge_method: 'rebase'
+      //      merge_method: 'rebase'
     });
 
     return pull.data;
@@ -98,6 +98,70 @@ class Github {
       repo,
       base,
       head
+    })
+
+    return response.data;
+  }
+
+  static async listReleases({
+    owner,
+    repo,
+  }) {
+    const octokit = new Octokit({
+      auth: process.env.GIT_AUTH
+    });
+
+    const response = await octokit.repos.listReleases({
+      owner,
+      repo,
+    })
+
+    return response.data;
+  }
+
+  static async createRelease({
+    owner,
+    repo,
+    tagName,
+    branch,
+    name,
+    body,
+    prerelease
+  }) {
+    const octokit = new Octokit({
+      auth: process.env.GIT_AUTH
+    });
+
+    const response = await octokit.repos.createRelease({
+      owner,
+      repo,
+      tag_name: tagName,
+      target_commitish: branch,
+      name,
+      body,
+      prerelease
+    })
+
+    return response.data;
+  }
+
+  static async updateRelease({
+    owner,
+    repo,
+    id,
+    prerelease,
+    body
+  }) {
+    const octokit = new Octokit({
+      auth: process.env.GIT_AUTH
+    });
+
+    const response = await octokit.repos.updateRelease({
+      owner,
+      repo,
+      release_id: id,
+      prerelease,
+      body
     })
 
     return response.data;

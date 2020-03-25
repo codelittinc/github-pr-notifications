@@ -1,4 +1,5 @@
 import { SlackRepository, Github, Slack } from '@services'
+import TagReleaseFlow from '../TagReleaseFlow';
 
 const config = {
   update: {
@@ -27,7 +28,6 @@ class ReleaseFlow {
       message: `Deployment process to *${environment.toUpperCase()}* process started by @${json.user_name}`,
       channel: deployChannel
     });
-
 
     let pullRequest;
     let pullRequestCreationError;
@@ -80,6 +80,9 @@ class ReleaseFlow {
         repo: repository,
         number
       });
+
+      console.log('starting tag release flow')
+      TagReleaseFlow.start(json)
     } catch (e) {
       if (e.errors) {
         pullRequestCreationError = e.errors[0].message;
