@@ -24,12 +24,14 @@ class NewPullRequestDirectComment {
     const repositoryData = SlackRepository.getRepositoryData(pr.repositoryName)
     const { channel } = repositoryData;
 
-    const mention = message.match(/@[a-zA-Z0-9]+/)
+    const mentions = message.match(/@[a-zA-Z0-9]+/g)
 
     const channelMessage = new ChannelMessage(channel, slackThreadTS);
-    if (mention) {
-      const slackUsername = SlackRepository.getSlackUser(mention[0].replace('@', ''))
-      channelMessage.notifyNewMessage(`@${slackUsername}`);
+    if (mentions) {
+      mentions.forEach((mention) => {
+        const slackUsername = SlackRepository.getSlackUser(mention.replace('@', ''))
+        channelMessage.notifyNewMessage(`@${slackUsername}`);
+      })
     }
   };
 
