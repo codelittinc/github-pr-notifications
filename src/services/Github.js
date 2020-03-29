@@ -83,6 +83,24 @@ class Github {
     });
   }
 
+  static async listBranchCommits({
+    owner,
+    repo,
+    branch,
+  }) {
+    const octokit = new Octokit({
+      auth: process.env.GIT_AUTH
+    });
+
+    const response = await octokit.repos.listCommits({
+      owner,
+      repo,
+      sha: branch
+    })
+
+    return response.data;
+  }
+
   static async compareBranchesCommits({
     owner,
     repo,
