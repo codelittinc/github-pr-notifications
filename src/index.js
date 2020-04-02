@@ -13,6 +13,8 @@ import {
   PullRequestsController
 } from './controllers';
 
+import Jira from './services/Jira';
+
 import addTestEndpoints from './addTestEndpoints';
 
 const app = express()
@@ -47,6 +49,58 @@ addTestEndpoints(app, processFlowRequest);
 
 app.post('/', (req, res) => {
   processFlowRequest(req, res)
+})
+
+
+app.get('/jira/:size?', async (req, res) => {
+  const listSize = req.params.size || 10
+
+//  const projects = await Jira.listProjects();
+//  let ids = projects.map(p => p.key)
+ // console.log('ids', ids)
+  //ids = [ids[0]];
+  const ids = [
+    'ARW',
+    'AYAPI',
+    'AYI',
+    'AYPI',
+    'HUB'
+  ]
+  let issues = []
+  for (let i = 0; i < ids.length; i++) {
+    const key = ids[i];
+    const result = await Jira.getProjectIssues(ids[i])
+    issues.push(result);
+  }
+
+  issues = issues.flat();
+
+  function shuffle(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+    return a;
+}
+
+  const data = shuffle(issues).splice(0, listSize).map(issue => {
+    const { key, fields } = issue;
+    const { status } = fields;
+
+    return {
+      link: `https://codelitt.atlassian.net/browse/${key}`,
+      status: status.name
+    }
+  })
+
+  res.send({
+    status: 200,
+    length: data.length,
+    data
+  })
 })
 
 app.post('/slack-actions', async (req, res) => {
