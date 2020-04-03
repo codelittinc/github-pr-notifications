@@ -1,36 +1,48 @@
 import RepositoryFlow from '../Flows/Repository/RepositoryFlow'
-import { SlackRepository } from '../services'
+import TaskManagerFlow from '../Flows/TaskManager/TaskManagerFlow'
 
 export default class SlackController {
   static async create(req, res) {
     const json = req.body;
 
-    const instance = new RepositoryFlow(json);
-    const Flow = await instance.getFlow(json)
+    const baseFlows = [RepositoryFlow, TaskManagerFlow];
+    let Flow = null;
 
-    const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(json.channel_name);
-    let message;
+    for (const F of baseFlows) {
+      try {
+        const instance = new F(json);
+        const f = await instance.getFlow(json)
 
-    let stop;
-
-    if (repositoryData && repositoryData.supports_deploy) {
-      message = 'ok';
-    } else {
-      message = "This channel doesn't support automatic deploys";
-      stop = true;
+        if (f) {
+          Flow = f;
+        }
+      } catch (e) { }
     }
+
+    let message;
+    let stop = false;
 
     if (!Flow) {
       stop = true;
       message = 'Please enter valid instructions.'
     }
 
+    if (!stop) {
+      message = Flow.getSlackResponse(json);
+      stop = !!message;
+    }
 
     if (!stop) {
       const flowName = Flow.name;
+      message = 'ok'
 
       console.log(`Start: ${flowName}`)
-      Flow.start(json)
+      if (typeof Flow.start !== "undefined") {
+        Flow.start(json)
+      } else {
+        const flow = new Flow(json);
+        flow.run();
+      }
     }
 
     const blocks = {

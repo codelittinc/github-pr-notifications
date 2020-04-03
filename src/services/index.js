@@ -6,6 +6,7 @@ import GithubCommits from './GithubCommits';
 import Reactji from './Reactji';
 import Slack from './Slack';
 import SlackRepository from './SlackRepository';
+import Jira from './Jira';
 
 export {
   ChannelMessage,
@@ -15,5 +16,6 @@ export {
   Reactji,
   Slack,
   SlackRepository,
-  GithubCommits
+  GithubCommits,
+  Jira
 };

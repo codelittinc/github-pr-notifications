@@ -116,6 +116,16 @@ class ReleaseFlow {
 
     return action === 'update';
   };
+
+  static getSlackResponse(json) {
+    const { channel_name } = json;
+    const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(channel_name);
+
+    if (!repositoryData && (repositoryData && !repositoryData.supports_deploy)) {
+      return "This channel doesn't support automatic deploys";
+    }
+  };
+
 }
 
 export default ReleaseFlow;
