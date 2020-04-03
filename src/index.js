@@ -3,9 +3,7 @@ dotenv.config()
 
 import bodyParser from 'body-parser';
 import express from 'express';
-import { PullRequest } from './models';
-import GithubFlow from './Flows/Repository/Github/GithubFlow';
-import ReleaseFlow from './Flows/Repository/Github/ReleaseFlow';
+import RepositoryFlow from './Flows/Repository/RepositoryFlow';
 import { SlackRepository } from './services'
 import {
   HomeController,
@@ -29,8 +27,9 @@ app.get(`/open-prs/:devGroup?`, PullRequestsController.index)
 
 const processFlowRequest = async (req, res) => {
   const json = req.body;
+  const instance = new RepositoryFlow(json);
 
-  const Flow = await GithubFlow.getFlow(json)
+  const Flow = await instance.getFlow(json)
 
   if (!Flow) {
     res.sendStatus(200)
@@ -105,7 +104,9 @@ app.get('/jira/:size?', async (req, res) => {
 
 app.post('/slack-actions', async (req, res) => {
   const json = req.body;
-  const Flow = await GithubFlow.getFlow(json)
+
+  const instance = new RepositoryFlow(json);
+  const Flow = await instance.getFlow(json)
 
   const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(json.channel_name);
   let message;

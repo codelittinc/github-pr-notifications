@@ -9,7 +9,11 @@ import RepositoryDiffFlow from './RepositoryDiffFlow';
 import NewPullRequestDirectCommentFlow from './NewPullRequestDirectCommentFlow';
 
 class GithubFlow {
-  static async getFlow(json) {
+  constructor(data) {
+    this.data = data;
+  }
+
+  async getFlow() {
     const flows = [
       NewPullRequestFlow,
       ClosePullRequestFlow,
@@ -23,7 +27,7 @@ class GithubFlow {
     ];
 
     for (const F of flows) {
-      if (await F.isFlow(json)) {
+      if (await F.isFlow(this.data)) {
         return F;
       }
     }
