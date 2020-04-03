@@ -4,11 +4,11 @@ dotenv.config()
 import bodyParser from 'body-parser';
 import express from 'express';
 import RepositoryFlow from './Flows/Repository/RepositoryFlow';
-import { SlackRepository } from './services'
 import {
   HomeController,
   DeployNotificationController,
-  PullRequestsController
+  PullRequestsController,
+  SlackController
 } from './controllers';
 
 import Jira from './services/Jira';
@@ -22,8 +22,10 @@ app.use(bodyParser.urlencoded());
 const PORT = process.env.PORT || 3000
 
 app.get('/', HomeController.index)
-app.post('/notify-deploy', DeployNotificationController.create);
 app.get(`/open-prs/:devGroup?`, PullRequestsController.index)
+
+app.post('/notify-deploy', DeployNotificationController.create);
+app.post('/slack', SlackController.create)
 
 const processFlowRequest = async (req, res) => {
   const json = req.body;
@@ -100,51 +102,6 @@ app.get('/jira/:size?', async (req, res) => {
     length: data.length,
     data
   })
-})
-
-app.post('/slack-actions', async (req, res) => {
-  const json = req.body;
-
-  const instance = new RepositoryFlow(json);
-  const Flow = await instance.getFlow(json)
-
-  const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(json.channel_name);
-  let message;
-
-  let stop;
-
-  if (repositoryData && repositoryData.supports_deploy) {
-    message = 'ok';
-  } else {
-    message = "This channel doesn't support automatic deploys";
-    stop = true;
-  }
-
-  if (!Flow) {
-    stop = true;
-    message = 'Please enter valid instructions.'
-  }
-
-
-  if (!stop) {
-    const flowName = Flow.name;
-
-    console.log(`Start: ${flowName}`)
-    Flow.start(json)
-  }
-
-  const blocks = {
-    "blocks": [
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": message,
-        }
-      }
-    ]
-  }
-  res.send(blocks);
 })
 
 app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))
