@@ -6,7 +6,7 @@ class SendRandomJiraIssuesFlow {
   }
 
   async run() {
-    const { size = 10, user_name } = this.data
+    const { size = 5, user_name } = this.data
 
     //  const projects = await Jira.listProjects();
     //  let ids = projects.map(p => p.key)
