@@ -175,12 +175,15 @@ app.post('/notify-deploy', (req, res) => {
 })
 
 import Todoist from './Todoist';
-app.get('/todoist', async (req, res) => {
-  Todoist.run()
+app.get('/todoist/:id', async (req, res) => {
+  const { id } = req.params;
+
+  Todoist.run(id)
 
   
   res.send({
     status: 200,
+    id
   })
 })
 
