@@ -82,12 +82,6 @@ const taskTemplates = [
       {
         name: "Review project designs",
       },
-      {
-        name: "Review git commit history",
-      },
-      {
-        name: "Review cards to see if the devs have the information they need",
-      },
     ]
   },
 ];
