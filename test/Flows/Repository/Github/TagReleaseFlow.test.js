@@ -6,7 +6,6 @@ import sinon from 'sinon';
 import Github from '../../../../src/services/Github.js'
 import GithubCommits from '../../../../src/services/GithubCommits.js'
 
-
 describe('TagReleaseFlow', () => {
   describe('.start', () => {
     describe('with a valid JSON', () => {
@@ -122,7 +121,8 @@ describe('TagReleaseFlow', () => {
     describe('with a valid JSON', () => {
       it('returns true', () => {
         const json = {
-          text: 'update X'
+          text: 'update X',
+          channel_name: 'team-website-deploy'
         }
 
         expect(TagReleaseFlow.isFlow(json)).toBeTruthy()
@@ -130,9 +130,19 @@ describe('TagReleaseFlow', () => {
     });
 
     describe('with an invalid JSON', () => {
-      it('returns true', () => {
+      it('which project does not deploy with tag', () => {
         const json = {
-          text: 'spotcheck X'
+          text: 'update X',
+          channel_name: 'test-gh-deploy'
+        }
+
+        expect(TagReleaseFlow.isFlow(json)).toBeFalsy()
+      });
+
+      it('which action is not update', () => {
+        const json = {
+          text: 'spotcheck X',
+          channel_name: 'team-website-deploy'
         }
 
         expect(TagReleaseFlow.isFlow(json)).toBeFalsy()

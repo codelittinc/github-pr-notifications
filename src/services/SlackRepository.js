@@ -10,7 +10,8 @@ const repositoriesIdentifiers = {
     channel: 'test-gh',
     deployChannel: 'test-gh-deploy',
     owner: 'codelittinc',
-    supports_deploy: true
+    supports_deploy: true,
+    deploy_with_tag: false
   },
   'codelitt-v2': {
     devGroup: '@website-devs',
@@ -18,7 +19,8 @@ const repositoriesIdentifiers = {
     deployChannel: 'team-website-deploy',
     owner: 'codelittinc',
     supports_deploy: true,
-    servers: ['dev-website-codelitt', 'qa-codelitt-website', 'prod-codelitt-website']
+    servers: ['dev-website-codelitt', 'qa-codelitt-website', 'prod-codelitt-website'],
+    deploy_with_tag: true
   },
   'rolli': {
     devGroup: '@rolli-devs',

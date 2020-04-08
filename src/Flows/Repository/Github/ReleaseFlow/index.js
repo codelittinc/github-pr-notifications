@@ -1,5 +1,5 @@
-import { SlackRepository, Github, Slack } from '@services'
-import TagReleaseFlow from '../TagReleaseFlow';
+import { SlackRepository, Github, Slack } from '../../../../services/index.js'
+import TagReleaseFlow from '../TagReleaseFlow/index.js';
 
 const config = {
   update: {
@@ -105,16 +105,21 @@ class ReleaseFlow {
     }
   };
 
-  static async isFlow(json) {
-    const { text } = json;
+  static isFlow(json) {
+    const { text, channel_name } = json;
 
     if (!text) {
       return;
     }
 
     const [action] = text.split(' ')
+    if (action !== 'update') {
+      return;
+    }
 
-    return action === 'update';
+    const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(channel_name);
+
+    return !repositoryData.deploy_with_tag;
   };
 
   static getSlackResponse(json) {

@@ -1,6 +1,6 @@
 import { SlackRepository, Github, GithubCommits } from '../../../../services/index.js'
 
-class ReleaseFlow {
+class TagReleaseFlow {
   static async start(json, callback) {
     const { channel_name, text } = json;
 
@@ -76,7 +76,7 @@ class ReleaseFlow {
     let index = 0;
 
     while (!oldestPrerelease) {
-      if (!releases[index + 1].prerelease) {
+      if (!releases[index + 1] || !releases[index + 1].prerelease) {
         oldestPrerelease = releases[index]
       } else {
         index++
@@ -97,8 +97,6 @@ class ReleaseFlow {
       repository,
     });
 
-    console.log(text)
-
     const latestReleaseLatestCommit = (await Github.listBranchCommits({
       owner,
       repo: repository,
@@ -118,17 +116,26 @@ class ReleaseFlow {
     })
   }
 
+  static getSlackResponse() {
+    return; 
+  }
+
   static isFlow(json) {
-    const { text } = json;
+    const { text, channel_name } = json;
 
     if (!text) {
       return;
     }
 
     const [action] = text.split(' ')
+    if (action !== 'update') {
+      return;
+    }
 
-    return false && action === 'update';
+    const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(channel_name);
+
+    return repositoryData.deploy_with_tag;
   };
 }
 
-export default ReleaseFlow;
+export default TagReleaseFlow;
