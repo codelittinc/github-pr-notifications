@@ -1,7 +1,7 @@
-import { SlackRepository, Github, GithubCommits } from '@services'
+import { SlackRepository, Github, GithubCommits } from '../../../../services/index.js'
 
 class ReleaseFlow {
-  static async start(json) {
+  static async start(json, callback) {
     const { channel_name, text } = json;
 
     const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(channel_name);
@@ -16,9 +16,13 @@ class ReleaseFlow {
 
     const latestRelease = releases[0];
     if (environment === 'qa') {
-      this.startReleaseCandidateFlow(latestRelease, owner, repository)
+      await this.startReleaseCandidateFlow(latestRelease, owner, repository)
     } else {
-      this.startReleaseFlow(releases, latestRelease, owner, repository)
+      await this.startReleaseFlow(releases, latestRelease, owner, repository)
+    }
+
+    if (callback) {
+      callback()
     }
   };
 
@@ -54,8 +58,7 @@ class ReleaseFlow {
       slackMessage = `${slackMessage} \n - EVERYTHING up to now`
     }
 
-    console.log(isBasedOnRelease, newTagVersion)
-    await Github.createRelease({
+    const data = {
       owner,
       repo: repository,
       tagName: newTagVersion,
@@ -63,7 +66,9 @@ class ReleaseFlow {
       name: `Version ${newTagVersion}`,
       body: slackMessage,
       prerelease: true
-    })
+    }
+
+    await Github.createRelease(data)
   }
 
   static async startReleaseFlow(releases, latestRelease, owner, repository) {
@@ -113,7 +118,7 @@ class ReleaseFlow {
     })
   }
 
-  static async isFlow(json) {
+  static isFlow(json) {
     const { text } = json;
 
     if (!text) {

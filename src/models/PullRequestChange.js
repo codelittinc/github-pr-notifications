@@ -1,4 +1,4 @@
-import { BaseModel } from '@models';
+import { BaseModel } from './index.js';
 
 class PullRequestChange extends BaseModel {
   static collectionName = 'pullRequestChanges';

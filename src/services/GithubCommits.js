@@ -1,4 +1,4 @@
-import { Github } from '@services'
+import { Github } from '../services/index.js'
 
 class GithubCommits {
   static async getCommitMessagesText({ head, base, owner, repository }) {

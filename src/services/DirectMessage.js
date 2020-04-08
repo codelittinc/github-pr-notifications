@@ -1,6 +1,6 @@
-import Slack from './Slack';
-import SlackReaction from '@enums/SlackReaction';
-import SlackRepository from './SlackRepository';
+import Slack from './Slack.js';
+import SlackReaction from '../enums/SlackReaction.js';
+import SlackRepository from './SlackRepository.js';
 
 class DirectMessage {
   constructor(ghUsername) {

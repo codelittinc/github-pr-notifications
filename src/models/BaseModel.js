@@ -1,6 +1,6 @@
 import mongodb from 'mongodb';
 
-import Database from '@services/Database';
+import Database from '../services/Database.js';
 
 class BaseModel {
   constructor(data) {

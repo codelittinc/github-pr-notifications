@@ -1,4 +1,4 @@
-import { BaseModel } from '@models';
+import { BaseModel } from './index.js';
 
 class CheckRun extends BaseModel {
   static collectionName = 'checkRuns';

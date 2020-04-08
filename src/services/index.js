@@ -1,12 +1,12 @@
-import ChannelMessage from './ChannelMessage';
-import Database from './Database';
-import DirectMessage from './DirectMessage';
-import Github from './Github';
-import GithubCommits from './GithubCommits';
-import Reactji from './Reactji';
-import Slack from './Slack';
-import SlackRepository from './SlackRepository';
-import Jira from './Jira';
+import ChannelMessage from './ChannelMessage.js';
+import Database from './Database.js';
+import DirectMessage from './DirectMessage.js';
+import Github from './Github.js';
+import GithubCommits from './GithubCommits.js';
+import Reactji from './Reactji.js';
+import Slack from './Slack.js';
+import SlackRepository from './SlackRepository.js';
+import Jira from './Jira.js';
 
 export {
   ChannelMessage,

@@ -1,5 +1,5 @@
-import { SlackRepository, Reactji, DirectMessage } from '@services'
-import { PullRequest, CheckRun } from '@models';
+import { SlackRepository, Reactji, DirectMessage } from '../../../../services/index.js';
+import { PullRequest, CheckRun } from '../../../../models/index.js';
 
 class CheckRunFlow {
   static async start(json) {

@@ -1,5 +1,5 @@
-import Database from '@services/Database';
-import { BaseModel, SlackMessage, PullRequestReview, PullRequestChange } from '@models';
+import Database from '../services/Database.js';
+import { BaseModel, SlackMessage, PullRequestReview, PullRequestChange } from './index.js';
 
 class PullRequest extends BaseModel {
   static collectionName = 'pullRequests';
