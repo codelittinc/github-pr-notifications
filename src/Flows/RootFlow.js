@@ -18,8 +18,6 @@ class RootFlow {
         return flow;
       }
     }
-
-    throw new FlowNotFoundError(this.data);
   }
 };
 
