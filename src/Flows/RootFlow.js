@@ -5,8 +5,8 @@ class RootFlow {
     this.data = data;
   }
 
-  run() {
-    this.getFlow().run();
+  async run() {
+   (await this.getFlow()).run();
   }
 
   async getFlow() {
