@@ -9,12 +9,38 @@ import Slack from '../../../../src/services/Slack.js'
 
 describe('TagReleaseFlow', () => {
   describe('.start', () => {
+    let sendMessageStub;
+    let slackGetInstaceStub;
+    let listReleasesStub;
+    let getCommitMessagesTextStub;
+    let createReleaseStub;
+    let listBranchCommitsStub;
+
+    beforeEach(function () {
+      sendMessageStub = sinon.stub();
+      slackGetInstaceStub = sinon.stub(Slack, 'getInstance').returns({
+        sendMessage: sendMessageStub
+      });
+
+      listReleasesStub = sinon.stub(Github, 'listReleases')
+      getCommitMessagesTextStub = sinon.stub(GithubCommits, 'getCommitMessagesText')
+      createReleaseStub = sinon.stub(Github, 'createRelease');
+      listBranchCommitsStub = sinon.stub(Github, 'listBranchCommits');
+    });
+
+    afterEach(function () {
+      Slack.getInstance.restore();
+      Github.listReleases.restore();
+      Github.createRelease.restore();
+      Github.listBranchCommits.restore()
+      GithubCommits.getCommitMessagesText.restore();
+    });
+
     describe('with a valid JSON', () => {
       describe('when it is the first release', () => {
         it('creates a new pre-release', (done) => {
-          sinon.stub(Github, 'listReleases').returns([]);
-          sinon.stub(GithubCommits, 'getCommitMessagesText').returns('nice commit message')
-          const gitStub = sinon.stub(Github, 'createRelease');
+          listReleasesStub.returns([]);
+          getCommitMessagesTextStub.returns('nice commit message')
 
           const json = {
             text: 'update qa',
@@ -22,21 +48,17 @@ describe('TagReleaseFlow', () => {
           }
 
           TagReleaseFlow.start(json, () => {
-            expect(gitStub.calledOnceWithExactly(
+            expect(createReleaseStub.calledOnceWithExactly(
               {
                 owner: 'codelittinc',
                 repo: 'gh-hooks-repo-test',
                 tagName: 'v0.0.0-rc1',
-                branch: 'develop',
+                branch: 'master',
                 name: 'Version v0.0.0-rc1',
                 body: 'Available in this release: \n - EVERYTHING up to now',
                 prerelease: true
               }
             )).toBeTruthy()
-
-            GithubCommits.getCommitMessagesText.restore()
-            Github.listReleases.restore();
-            Github.createRelease.restore();
 
             done()
           })
@@ -45,43 +67,33 @@ describe('TagReleaseFlow', () => {
 
       describe('when there are no differences between master and the latest release and is trying to create a release candidate', () => {
         it('does not create a new release', (done) => {
-          sinon.stub(Github, 'listReleases').returns([
+          listReleasesStub.returns([
             {
               tag_name: 'v0.0.0-rc1'
             }
           ]);
-          sinon.stub(GithubCommits, 'getCommitMessagesText').returns(null)
-          const gitStub = sinon.stub(Github, 'createRelease');
+          getCommitMessagesTextStub.returns(null)
 
           const json = {
             text: 'update qa',
             channel_name: 'test-gh-deploy'
           }
-          TagReleaseFlow.start(json, () => {
-            expect(gitStub.notCalled).toBeTruthy()
 
-            GithubCommits.getCommitMessagesText.restore()
-            Github.listReleases.restore();
-            Github.createRelease.restore();
+          TagReleaseFlow.start(json, () => {
+            expect(createReleaseStub.notCalled).toBeTruthy()
 
             done()
           })
         });
 
         it('notifies the user that it does not have new changes', (done) => {
-          sinon.stub(Github, 'listReleases').returns([
+          listReleasesStub.returns([
             {
               tag_name: 'v0.0.0-rc1'
             }
           ]);
 
-          sinon.stub(GithubCommits, 'getCommitMessagesText').returns(null)
-
-          const testStub = sinon.stub()
-          const slackStub = sinon.stub(Slack, 'getInstance').returns({
-            sendMessage: testStub
-          })
-          sinon.stub(Github, 'createRelease');
+          getCommitMessagesTextStub.returns(null)
 
           const json = {
             text: 'update qa',
@@ -89,16 +101,10 @@ describe('TagReleaseFlow', () => {
           };
 
           TagReleaseFlow.start(json, () => {
-            expect(slackStub.calledOnce).toBeTruthy()
-            expect(testStub.calledOnceWith({
+            expect(sendMessageStub.calledWithExactly({
               message: "The server already has the latest updates",
               channel: 'test-gh-deploy'
             })).toBeTruthy()
-
-            GithubCommits.getCommitMessagesText.restore()
-            Github.listReleases.restore();
-            Github.createRelease.restore();
-            Slack.getInstance.restore();
 
             done()
           })
@@ -107,47 +113,35 @@ describe('TagReleaseFlow', () => {
 
       describe('when there are no differences between master and the latest release and is trying to create a stable release', () => {
         it('does not create a new release', (done) => {
-          sinon.stub(Github, 'listReleases').returns([
+          listReleasesStub.returns([
             {
               tag_name: 'v0.0.0-rc1'
             }
           ]);
 
-          sinon.stub(GithubCommits, 'getCommitMessagesText').returns(null)
-          sinon.stub(Github, 'listBranchCommits').returns([{}, {}])
-          const gitStub = sinon.stub(Github, 'createRelease');
+          getCommitMessagesTextStub.returns(null)
+          listBranchCommitsStub.returns([{}, {}])
 
           const json = {
             text: 'update prod',
             channel_name: 'test-gh-deploy'
           }
           TagReleaseFlow.start(json, () => {
-            expect(gitStub.notCalled).toBeTruthy()
-
-            GithubCommits.getCommitMessagesText.restore()
-            Github.listReleases.restore();
-            Github.createRelease.restore();
-            Github.listBranchCommits.restore();
+            expect(createReleaseStub.notCalled).toBeTruthy()
 
             done()
           })
         });
 
         it('notifies the user that it does not have new changes', (done) => {
-          sinon.stub(Github, 'listReleases').returns([
+          listReleasesStub.returns([
             {
               tag_name: 'v0.0.0-rc1'
             }
           ]);
 
-          sinon.stub(GithubCommits, 'getCommitMessagesText').returns(null)
-          sinon.stub(Github, 'listBranchCommits').returns([{}, {}])
-          sinon.stub(Github, 'createRelease');
-
-          const testStub = sinon.stub()
-          const slackStub = sinon.stub(Slack, 'getInstance').returns({
-            sendMessage: testStub
-          })
+          getCommitMessagesTextStub.returns(null)
+          listBranchCommitsStub.returns([{}, {}])
 
           const json = {
             text: 'update prod',
@@ -155,32 +149,24 @@ describe('TagReleaseFlow', () => {
           };
 
           TagReleaseFlow.start(json, () => {
-            expect(slackStub.calledOnce).toBeTruthy()
-            expect(testStub.calledOnceWith({
+            expect(sendMessageStub.calledWith({
               message: "The server already has the latest updates",
               channel: 'test-gh-deploy'
             })).toBeTruthy()
 
-            GithubCommits.getCommitMessagesText.restore()
-            Github.listReleases.restore();
-            Github.createRelease.restore();
-            Slack.getInstance.restore();
-            Github.listBranchCommits.restore();
-
             done()
           })
-      });
+        });
       });
 
       describe('when it already has a release candidate', () => {
         it('creates a new pre-release', (done) => {
-          sinon.stub(Github, 'listReleases').returns([
+          listReleasesStub.returns([
             {
               tag_name: 'v0.0.0-rc1'
             }
           ]);
-          sinon.stub(GithubCommits, 'getCommitMessagesText').returns('nice commit message')
-          const gitStub = sinon.stub(Github, 'createRelease');
+          getCommitMessagesTextStub.returns('nice commit message')
 
           const json = {
             text: 'update qa',
@@ -188,35 +174,31 @@ describe('TagReleaseFlow', () => {
           }
 
           TagReleaseFlow.start(json, () => {
-            expect(gitStub.calledOnceWithExactly(
+            expect(createReleaseStub.calledOnceWithExactly(
               {
                 owner: 'codelittinc',
                 repo: 'gh-hooks-repo-test',
                 tagName: 'v0.0.0-rc2',
-                branch: 'develop',
+                branch: 'master',
                 name: 'Version v0.0.0-rc2',
                 body: 'Available in this release: \nnice commit message',
                 prerelease: true
               }
             )).toBeTruthy()
 
-            GithubCommits.getCommitMessagesText.restore()
-            Github.listReleases.restore();
-            Github.createRelease.restore();
-
             done()
           })
         });
       })
+
       describe('when it already has a release', () => {
         it('creates a new pre-release', (done) => {
-          sinon.stub(Github, 'listReleases').returns([
+          listReleasesStub.returns([
             {
               tag_name: 'v0.0.1'
             }
           ]);
-          sinon.stub(GithubCommits, 'getCommitMessagesText').returns('nice commit message')
-          const gitStub = sinon.stub(Github, 'createRelease');
+          getCommitMessagesTextStub.returns('nice commit message')
 
           const json = {
             text: 'update qa',
@@ -224,21 +206,17 @@ describe('TagReleaseFlow', () => {
           }
 
           TagReleaseFlow.start(json, () => {
-            expect(gitStub.calledOnceWithExactly(
+            expect(createReleaseStub.calledOnceWithExactly(
               {
                 owner: 'codelittinc',
                 repo: 'gh-hooks-repo-test',
                 tagName: 'v0.0.2-rc0',
-                branch: 'develop',
+                branch: 'master',
                 name: 'Version v0.0.2-rc0',
                 body: 'Available in this release: \nnice commit message',
                 prerelease: true
               }
             )).toBeTruthy()
-
-            GithubCommits.getCommitMessagesText.restore()
-            Github.listReleases.restore();
-            Github.createRelease.restore();
 
             done()
           })
