@@ -22,7 +22,7 @@ export default async (deployChannel, latestRelease = {}, owner, repository) => {
   let commitsMessage;
   if (tag_name !== DEFAULT_TAG_NAME) {
     commitsMessage = await GithubCommits.getCommitMessagesText({
-      head: 'develop',
+      head: 'master',
       base: tag_name,
       owner,
       repository,
@@ -37,7 +37,7 @@ export default async (deployChannel, latestRelease = {}, owner, repository) => {
       owner,
       repo: repository,
       tagName: newTagVersion,
-      branch: 'develop',
+      branch: 'master',
       name: `Version ${newTagVersion}`,
       body: slackMessage,
       prerelease: true
