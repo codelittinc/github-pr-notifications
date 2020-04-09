@@ -46,10 +46,9 @@ export default async (deployChannel, latestRelease = {}, owner, repository) => {
     await Github.createRelease(data)
 
     Slack.getInstance().sendMessage({
-      message: `Deployment process to *${environment.toUpperCase()}* process started by @${user_name}`,
-      channel:  slackMessage
+      message: slackMessage,
+      channel: deployChannel 
     });
-
   } else {
     Slack.getInstance().sendMessage({
       message: "The server already has the latest updates",

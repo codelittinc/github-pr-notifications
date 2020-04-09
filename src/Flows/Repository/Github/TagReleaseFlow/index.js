@@ -1,4 +1,4 @@
-import { SlackRepository, Github } from '../../../../services/index.js'
+import { SlackRepository, Github, Slack } from '../../../../services/index.js'
 
 import startReleaseFlow from './startReleaseFlow.js';
 import startReleaseCandidateFlow from './startReleaseCandidateFlow.js';

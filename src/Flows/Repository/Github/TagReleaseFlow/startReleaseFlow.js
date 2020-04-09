@@ -32,7 +32,6 @@ export default async (deployChannel, releases, latestRelease, owner, repository)
     branch: latestRelease.tag_name
   }))[0]
 
-  console.log(latestRelease, tag_name)
   const baseTagVersion = tag_name.match(/v\d+\.\d+\.\d+/)[0]
 
   if (text) {
@@ -44,6 +43,10 @@ export default async (deployChannel, releases, latestRelease, owner, repository)
       name: `Version ${baseTagVersion}`,
       body: `Available in this release \n ${text}`,
       prerelease: false
+    });
+    Slack.getInstance().sendMessage({
+      message: `Available in this release \n${text}`,
+      channel:  slackMessage
     });
   } else {
 
