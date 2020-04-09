@@ -5,6 +5,7 @@ import TagReleaseFlow from '../../../../src/Flows/Repository/Github/TagReleaseFl
 import sinon from 'sinon';
 import Github from '../../../../src/services/Github.js'
 import GithubCommits from '../../../../src/services/GithubCommits.js'
+import Slack from '../../../../src/services/Slack.js'
 
 describe('TagReleaseFlow', () => {
   describe('.start', () => {
@@ -66,6 +67,42 @@ describe('TagReleaseFlow', () => {
             done()
           })
         });
+
+        it('notifies the user that it does not have new changes', (done) => {
+          sinon.stub(Github, 'listReleases').returns([
+            {
+              tag_name: 'v0.0.0-rc1'
+            }
+          ]);
+
+          sinon.stub(GithubCommits, 'getCommitMessagesText').returns(null)
+
+          const testStub = sinon.stub()
+          const slackStub = sinon.stub(Slack, 'getInstance').returns({
+            sendMessage: testStub
+          })
+          sinon.stub(Github, 'createRelease');
+
+          const json = {
+            text: 'update qa',
+            channel_name: 'test-gh-deploy'
+          };
+
+          TagReleaseFlow.start(json, () => {
+            expect(slackStub.calledOnce).toBeTruthy()
+            expect(testStub.calledOnceWith({
+              message: "The server already has the latest updates",
+              channel: 'test-gh-deploy'
+            })).toBeTruthy()
+
+            GithubCommits.getCommitMessagesText.restore()
+            Github.listReleases.restore();
+            Github.createRelease.restore();
+            Slack.getInstance.restore();
+
+            done()
+          })
+        });
       });
 
       describe('when there are no differences between master and the latest release and is trying to create a stable release', () => {
@@ -90,10 +127,49 @@ describe('TagReleaseFlow', () => {
             GithubCommits.getCommitMessagesText.restore()
             Github.listReleases.restore();
             Github.createRelease.restore();
+            Github.listBranchCommits.restore();
 
             done()
           })
         });
+
+        it('notifies the user that it does not have new changes', (done) => {
+          sinon.stub(Github, 'listReleases').returns([
+            {
+              tag_name: 'v0.0.0-rc1'
+            }
+          ]);
+
+          sinon.stub(GithubCommits, 'getCommitMessagesText').returns(null)
+          sinon.stub(Github, 'listBranchCommits').returns([{}, {}])
+          sinon.stub(Github, 'createRelease');
+
+          const testStub = sinon.stub()
+          const slackStub = sinon.stub(Slack, 'getInstance').returns({
+            sendMessage: testStub
+          })
+
+          const json = {
+            text: 'update prod',
+            channel_name: 'test-gh-deploy'
+          };
+
+          TagReleaseFlow.start(json, () => {
+            expect(slackStub.calledOnce).toBeTruthy()
+            expect(testStub.calledOnceWith({
+              message: "The server already has the latest updates",
+              channel: 'test-gh-deploy'
+            })).toBeTruthy()
+
+            GithubCommits.getCommitMessagesText.restore()
+            Github.listReleases.restore();
+            Github.createRelease.restore();
+            Slack.getInstance.restore();
+            Github.listBranchCommits.restore();
+
+            done()
+          })
+      });
       });
 
       describe('when it already has a release candidate', () => {

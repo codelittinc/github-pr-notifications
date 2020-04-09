@@ -20,9 +20,9 @@ class TagReleaseFlow {
     const latestRelease = releases[0];
 
     if (environment === 'qa') {
-      await startReleaseCandidateFlow(latestRelease, owner, repository)
+      await startReleaseCandidateFlow(channel_name, latestRelease, owner, repository)
     } else {
-      await startReleaseFlow(releases, latestRelease, owner, repository)
+      await startReleaseFlow(channel_name, releases, latestRelease, owner, repository)
     }
 
     callback()

@@ -1,6 +1,6 @@
-import { Github, GithubCommits } from '../../../../services/index.js'
+import { Github, GithubCommits, Slack } from '../../../../services/index.js'
 
-export default async (releases, latestRelease, owner, repository) => {
+export default async (deployChannel, releases, latestRelease, owner, repository) => {
   let oldestPrerelease;
   let index = 0;
 
@@ -32,19 +32,24 @@ export default async (releases, latestRelease, owner, repository) => {
     branch: latestRelease.tag_name
   }))[0]
 
+  console.log(latestRelease, tag_name)
   const baseTagVersion = tag_name.match(/v\d+\.\d+\.\d+/)[0]
 
-  if(!text) {
-    return;
-  }
+  if (text) {
+    await Github.createRelease({
+      owner,
+      repo: repository,
+      tagName: baseTagVersion,
+      branch: latestReleaseLatestCommit.sha,
+      name: `Version ${baseTagVersion}`,
+      body: `Available in this release \n ${text}`,
+      prerelease: false
+    });
+  } else {
 
-  await Github.createRelease({
-    owner,
-    repo: repository,
-    tagName: baseTagVersion,
-    branch: latestReleaseLatestCommit.sha,
-    name: `Version ${baseTagVersion}`,
-    body: `Available in this release \n ${text}`,
-    prerelease: false
-  });
+    Slack.getInstance().sendMessage({
+      message: "The server already has the latest updates",
+      channel: deployChannel
+    });
+  }
 }

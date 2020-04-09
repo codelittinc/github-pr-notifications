@@ -1,6 +1,6 @@
-import { Github, GithubCommits } from '../../../../services/index.js'
+import { Github, GithubCommits, Slack } from '../../../../services/index.js'
 
-export default async (latestRelease = {}, owner, repository) => {
+export default async (deployChannel, latestRelease = {}, owner, repository) => {
   const DEFAULT_TAG_NAME = 'v0.0.0-rc.0';
   const { tag_name = DEFAULT_TAG_NAME } = latestRelease;
   const isBasedOnRelease = !tag_name.match('rc')
@@ -42,8 +42,12 @@ export default async (latestRelease = {}, owner, repository) => {
       body: slackMessage,
       prerelease: true
     }
-    console.log('RELEEEASING')
 
     await Github.createRelease(data)
+  } else {
+    Slack.getInstance().sendMessage({
+      message: "The server already has the latest updates",
+      channel: deployChannel
+    });
   }
 }
