@@ -46,7 +46,7 @@ export default async (deployChannel, releases, latestRelease, owner, repository)
     });
     Slack.getInstance().sendMessage({
       message: `Available in this release \n${text}`,
-      channel:  slackMessage
+      channel: text
     });
   } else {
 
