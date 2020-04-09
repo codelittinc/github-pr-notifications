@@ -5,7 +5,7 @@ import startReleaseCandidateFlow from './startReleaseCandidateFlow.js';
 
 class TagReleaseFlow {
   static async start(json, callback) {
-    const { channel_name, text } = json;
+    const { user_name, channel_name, text } = json;
 
     const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(channel_name);
     const { owner, repository } = repositoryData;
@@ -19,13 +19,20 @@ class TagReleaseFlow {
 
     const latestRelease = releases[0];
 
+    Slack.getInstance().sendMessage({
+      message: `Deployment process to *${environment.toUpperCase()}* process started by @${user_name}`,
+      channel: channel_name 
+    });
+
     if (environment === 'qa') {
       await startReleaseCandidateFlow(channel_name, latestRelease, owner, repository)
     } else {
       await startReleaseFlow(channel_name, releases, latestRelease, owner, repository)
     }
 
-    callback()
+    if (callback) {
+      callback()
+    }
   };
 
   static getSlackResponse() {
