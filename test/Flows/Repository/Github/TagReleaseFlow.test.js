@@ -40,7 +40,61 @@ describe('TagReleaseFlow', () => {
             done()
           })
         });
-      })
+      });
+
+      describe('when there are no differences between master and the latest release and is trying to create a release candidate', () => {
+        it('does not create a new release', (done) => {
+          sinon.stub(Github, 'listReleases').returns([
+            {
+              tag_name: 'v0.0.0-rc1'
+            }
+          ]);
+          sinon.stub(GithubCommits, 'getCommitMessagesText').returns(null)
+          const gitStub = sinon.stub(Github, 'createRelease');
+
+          const json = {
+            text: 'update qa',
+            channel_name: 'test-gh-deploy'
+          }
+          TagReleaseFlow.start(json, () => {
+            expect(gitStub.notCalled).toBeTruthy()
+
+            GithubCommits.getCommitMessagesText.restore()
+            Github.listReleases.restore();
+            Github.createRelease.restore();
+
+            done()
+          })
+        });
+      });
+
+      describe('when there are no differences between master and the latest release and is trying to create a stable release', () => {
+        it('does not create a new release', (done) => {
+          sinon.stub(Github, 'listReleases').returns([
+            {
+              tag_name: 'v0.0.0-rc1'
+            }
+          ]);
+
+          sinon.stub(GithubCommits, 'getCommitMessagesText').returns(null)
+          sinon.stub(Github, 'listBranchCommits').returns([{}, {}])
+          const gitStub = sinon.stub(Github, 'createRelease');
+
+          const json = {
+            text: 'update prod',
+            channel_name: 'test-gh-deploy'
+          }
+          TagReleaseFlow.start(json, () => {
+            expect(gitStub.notCalled).toBeTruthy()
+
+            GithubCommits.getCommitMessagesText.restore()
+            Github.listReleases.restore();
+            Github.createRelease.restore();
+
+            done()
+          })
+        });
+      });
 
       describe('when it already has a release candidate', () => {
         it('creates a new pre-release', (done) => {
