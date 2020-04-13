@@ -71,7 +71,7 @@ const taskTemplates = [
   {
     id: 3,
     projectName: "👨‍🚀 Work",
-    due: 'today at 9am',
+    due: 'today',
     task: {
       name: `Review Project ${reviewProjectDaily[getDaily()]}`
     },
