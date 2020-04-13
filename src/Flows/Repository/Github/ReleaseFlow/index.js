@@ -83,10 +83,11 @@ class ReleaseFlow {
 
     } catch (e) {
       if (e.errors) {
-        pullRequestCreationError = e.errors[0].message;
+        mergeError = e.errors[0].message;
       } else {
-        pullRequestCreationError = e.toString();
+        mergeError = e.toString();
       }
+      console.log("error while creating the PR", mergeError)
     }
 
     if (mergeError) {
