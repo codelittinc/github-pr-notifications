@@ -70,13 +70,17 @@ class ReleaseFlow {
 
     let mergeError;
     try {
+      console.log('starting pull request')
       merge = await Github.mergePullRequest({
         owner,
         repo: repository,
         number
       });
 
-      TagReleaseFlow.start(json)
+      console.log('starting the tag release flow');
+      await TagReleaseFlow.start(json)
+      console.log('finishing the tag release flow');
+
     } catch (e) {
       if (e.errors) {
         pullRequestCreationError = e.errors[0].message;
