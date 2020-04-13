@@ -70,6 +70,10 @@ class RepositoryDiffFlow {
     });
   };
 
+  static getSlackResponse() {
+    return; 
+  }
+
   static async isFlow(json) {
     const { text } = json;
 
