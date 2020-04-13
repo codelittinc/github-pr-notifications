@@ -71,7 +71,7 @@ class ReleaseFlow {
     let mergeError;
     try {
       console.log('starting pull request')
-      merge = await Github.mergePullRequest({
+      await Github.mergePullRequest({
         owner,
         repo: repository,
         number
