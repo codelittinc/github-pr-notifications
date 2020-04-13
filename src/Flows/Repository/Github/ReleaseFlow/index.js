@@ -77,7 +77,7 @@ class ReleaseFlow {
         number
       });
 
-      console.log('starting the tag release flow');
+      console.log(`starting the tag release flow for ${json}`);
       await TagReleaseFlow.start(json)
       console.log('finishing the tag release flow');
 
