@@ -28,7 +28,8 @@ const repositoriesIdentifiers = {
     deployChannel: 'team-rolli-deploy',
     owner: 'codelittinc',
     supports_deploy: true,
-    servers: ['dev-rolli', 'qa-rolli', 'prod-rolli']
+    servers: ['dev-rolli', 'qa-rolli', 'prod-rolli'],
+    deploy_with_tag: true
   },
   'team-maker': {
     devGroup: '@team-maker-devs',
