@@ -1,5 +1,4 @@
 import { SlackRepository, Github, Slack } from '../../../../services/index.js'
-import TagReleaseFlow from '../TagReleaseFlow/index.js';
 
 const config = {
   update: {
@@ -16,7 +15,7 @@ const config = {
 
 class ReleaseFlow {
   static async start(json) {
-    const { channel_name, text } = json;
+    const { channel_name, text, user_name } = json;
 
     const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(channel_name);
     const { deployChannel, owner, repository } = repositoryData;
@@ -27,6 +26,10 @@ class ReleaseFlow {
 
     let pullRequest;
     let pullRequestCreationError;
+    Slack.getInstance().sendMessage({
+      message: `Deployment process to *${environment.toUpperCase()}* process started by @${user_name}`,
+      channel: channel_name 
+    });
 
     try {
       pullRequest = await Github.createPullRequest({
@@ -70,17 +73,11 @@ class ReleaseFlow {
 
     let mergeError;
     try {
-      console.log('starting pull request')
       await Github.mergePullRequest({
         owner,
         repo: repository,
         number
       });
-
-      console.log(`starting the tag release flow for ${json}`);
-      await TagReleaseFlow.start(json)
-      console.log('finishing the tag release flow');
-
     } catch (e) {
       if (e.errors) {
         mergeError = e.errors[0].message;
