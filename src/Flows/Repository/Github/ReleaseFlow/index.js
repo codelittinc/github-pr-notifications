@@ -23,6 +23,10 @@ class ReleaseFlow {
     const [event, environment] = text.split(' ');
 
     const { head, base } = config[event][environment];
+    Slack.getInstance().sendMessage({
+      message: `Deployment process to *${environment.toUpperCase()}* process started by @${json.user_name}`,
+      channel: deployChannel
+    });
 
     let pullRequest;
     let pullRequestCreationError;
@@ -71,6 +75,7 @@ class ReleaseFlow {
 
     const { number } = pullRequest;
 
+    let merge;
     let mergeError;
     try {
       await Github.mergePullRequest({

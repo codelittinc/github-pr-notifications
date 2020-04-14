@@ -2,6 +2,7 @@ import NewPullRequestFlow from './NewPullRequestFlow';
 import ClosePullRequestFlow from './ClosePullRequestFlow';
 import UpdatePullRequestCodeFlow from './UpdatePullRequestCodeFlow';
 import NewReviewSubmissionFlow from './NewReviewSubmissionFlow';
+import SendChangelogFlow from './SendChangelogFlow';
 import CheckRunFlow from './CheckRunFlow';
 import ReleaseFlow from './ReleaseFlow';
 import TagReleaseFlow from './TagReleaseFlow';
@@ -19,6 +20,7 @@ class GithubFlow {
       ClosePullRequestFlow,
       NewReviewSubmissionFlow,
       UpdatePullRequestCodeFlow,
+      SendChangelogFlow,
       CheckRunFlow,
       ReleaseFlow,
       TagReleaseFlow,
