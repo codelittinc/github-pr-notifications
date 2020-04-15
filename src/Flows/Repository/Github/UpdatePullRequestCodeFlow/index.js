@@ -41,6 +41,7 @@ class UpdatePullRequestCodeFlow {
     }
 
     const content = pushChangeParser.parse(json);
+
     const { repositoryName, branchName } = content;
 
     if (branchName === 'master' || branchName === 'development' || branchName === 'develop' || branchName === 'qa') {

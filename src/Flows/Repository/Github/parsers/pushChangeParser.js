@@ -1,6 +1,8 @@
 const parse = (json) => {
+  const branchNameMatches = json.ref.match(/refs\/heads\/(.*)/);
+
   return {
-    branchName: json.ref.match(/refs\/heads\/(.*)/)[1],
+    branchName: branchNameMatches ? branchNameMatches[1] : null,
     repositoryName: json.repository.name
   }
 }
