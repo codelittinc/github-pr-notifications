@@ -1,4 +1,5 @@
 import dotenv from 'dotenv'
+import axios from 'axios';
 dotenv.config()
 
 import bodyParser from 'body-parser';
@@ -52,13 +53,28 @@ app.post('/', (req, res) => {
   processFlowRequest(req, res)
 })
 
+app.post('/mentions', async (req, res) => {
+  const { event } = req.body;
+  if (event) {
+    const { channel, text } = event;
+
+    const url = 'https://hooks.zapier.com/hooks/catch/4254966/o547s18';
+
+    await axios.post(url, {
+      text,
+    });
+  }
+
+
+  res.sendStatus(200)
+})
 
 app.get('/jira/:size?', async (req, res) => {
   const listSize = req.params.size || 10
 
-//  const projects = await Jira.listProjects();
-//  let ids = projects.map(p => p.key)
- // console.log('ids', ids)
+  //  const projects = await Jira.listProjects();
+  //  let ids = projects.map(p => p.key)
+  // console.log('ids', ids)
   //ids = [ids[0]];
   const ids = [
     'ARW',
@@ -79,13 +95,13 @@ app.get('/jira/:size?', async (req, res) => {
   function shuffle(a) {
     var j, x, i;
     for (i = a.length - 1; i > 0; i--) {
-        j = Math.floor(Math.random() * (i + 1));
-        x = a[i];
-        a[i] = a[j];
-        a[j] = x;
+      j = Math.floor(Math.random() * (i + 1));
+      x = a[i];
+      a[i] = a[j];
+      a[j] = x;
     }
     return a;
-}
+  }
 
   const data = shuffle(issues).splice(0, listSize).map(issue => {
     const { key, fields } = issue;
