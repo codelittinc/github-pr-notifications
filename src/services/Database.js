@@ -10,6 +10,7 @@ class Database {
   async setClient() {
     this.client = await mongo.connect(this.mongoUrl, {
       useNewUrlParser: true,
+      useUnifiedTopology: true
     });
   }
 

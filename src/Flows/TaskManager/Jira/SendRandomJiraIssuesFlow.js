@@ -63,6 +63,9 @@ class SendRandomJiraIssuesFlow {
 
   isFlow() {
     const { text } = this.data;
+    if (!text) {
+      return;
+    }
     const [action] = text.split(' ');
     return action === 'spotcheck';
   };

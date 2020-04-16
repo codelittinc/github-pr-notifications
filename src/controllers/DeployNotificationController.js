@@ -8,7 +8,7 @@ export default class DeployNotificationController {
     const flowName = flow.constructor.name;
 
     console.log(`Start: ${flowName}`)
-    flow.run()
+    await flow.run()
     console.log(`End: ${flowName}`)
 
     res.sendStatus(200);

@@ -9,5 +9,5 @@ export {
   DeployNotificationController,
   PullRequestsController,
   SlackController,
-  FlowsController
+  FlowsController,
 };

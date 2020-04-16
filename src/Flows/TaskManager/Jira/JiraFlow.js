@@ -1,4 +1,5 @@
 import SendRandomJiraIssuesFlow from './SendRandomJiraIssuesFlow';
+import JiraIssueNotificationFlow from './JiraIssueNotificationFlow';
 
 class JiraFlow {
   constructor(data) {
@@ -8,6 +9,7 @@ class JiraFlow {
   async getFlow() {
     const flows = [
       SendRandomJiraIssuesFlow,
+      JiraIssueNotificationFlow
     ];
 
     for (const F of flows) {
