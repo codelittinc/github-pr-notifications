@@ -24,8 +24,12 @@ export default class FlowsController {
 
     const flowName = Flow.name;
     console.log(`Start: ${flowName}`)
-    const f = new Flow(json)
-    await f.run(json)
+    if (Flow.run) {
+      Flow.run(json)
+    } else {
+      const f = new Flow(json)
+      await f.run(json)
+    }
     console.log(`End: ${flowName}`)
 
     res.sendStatus(200)
