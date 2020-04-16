@@ -8,12 +8,9 @@ class Database {
   }
 
   async setClient() {
-    const a = 'mongodb://engineering:AtThisPoint@cluster0-shard-00-00-xwdex.mongodb.net:27017,cluster0-shard-00-01-xwdex.mongodb.net:27017,cluster0-shard-00-02-xwdex.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
-    this.client = await new mongo.MongoClient(a, {
+    this.client = await mongo.connect(this.mongoUrl, {
       useNewUrlParser: true,
     });
-
-    await this.client.connect();
   }
 
   static async getInstance() {
