@@ -21,7 +21,7 @@ export default class JiraIssueNotificationFlow {
     slackMentions.forEach(mention => {
       const text = `Hey there is a new mention for you on Jira https://codelitt.atlassian.net/browse/${key}`;
       Slack.getInstance().sendDirectMessage({
-        message: `Here is your Jira spotcheck! \n ${text}`,
+        message: text,
         username: mention
       });
     })

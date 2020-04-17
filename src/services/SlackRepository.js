@@ -101,7 +101,6 @@ const repositoriesIdentifiers = {
 }
 
 const jiraToSlackUsers = {
-  '5da5fecb1a43fe0ddbb45cbe': 'pablo.silva',
   '5c06bd73ed04de3e5b754509': 'gabriel',
   '5e6648d0219fb10cf9ed9c8d': 'matias',
   '5c73e558a610e635fa0fad26': 'vincent',
