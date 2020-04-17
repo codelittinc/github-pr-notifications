@@ -24,8 +24,8 @@ export default class FlowsController {
 
     const flowName = Flow.name;
     console.log(`Start: ${flowName}`)
-    if (Flow.run) {
-      Flow.run(json)
+    if (Flow.start) {
+      Flow.start(json)
     } else {
       const f = new Flow(json)
       await f.run(json)
