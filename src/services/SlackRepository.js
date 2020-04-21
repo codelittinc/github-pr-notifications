@@ -62,7 +62,8 @@ const repositoriesIdentifiers = {
     channel: 'team-ay-pia-web-dev',
     owner: 'codelittinc',
     deployChannel: 'team-pia-web-deploy',
-    supports_deploy: true
+    supports_deploy: true,
+    servers: ['dev-ay-pia-web']
   },
   'ay-excel-import-api': {
     devGroup: '@ay-backend-devs',
