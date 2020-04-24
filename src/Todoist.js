@@ -30,6 +30,9 @@ const taskTemplates = [
         name: "Start Toggle",
       },
       {
+        name: "Create 10 products ideas",
+      },
+      {
         name: "Review PRs",
       },
       {
@@ -68,22 +71,22 @@ const taskTemplates = [
       }
     ]
   },
-  {
-    id: 3,
-    projectName: "👨‍🚀 Work",
-    due: 'today',
-    task: {
-      name: `Review Project ${reviewProjectDaily[getDaily()]}`
-    },
-    subtasks: [
-      {
-        name: "Review from an user perspective",
-      },
-      {
-        name: "Review project designs",
-      },
-    ]
-  },
+//  {
+//    id: 3,
+//    projectName: "👨‍🚀 Work",
+//    due: 'today',
+//    task: {
+//      name: `Review Project ${reviewProjectDaily[getDaily()]}`
+//    },
+//    subtasks: [
+//      {
+//        name: "Review from an user perspective",
+//      },
+//      {
+//        name: "Review project designs",
+//      },
+//    ]
+//  },
 ];
 
 
