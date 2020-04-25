@@ -16,7 +16,6 @@ export default class FlowsController {
       }
     }
 
-    console.log(Flow)
     if (!Flow) {
       res.sendStatus(200)
       return;
