@@ -166,7 +166,6 @@ const getRepositoryDataByServer = (server) => {
   return repositoriesIdentifiers[key];
 };
 
-const getSlackUserFromJira = (jiraId) => jiraToSlackUsers[jiraId];
 const getSlackUser = (ghUser) => ghToSlackUsers[ghUser.toLowerCase()]
 const getAdminSlackUser = () => 'kaiomagalhaes';
 
@@ -177,6 +176,4 @@ export default {
   getAdminSlackUser,
   getRepositoryDataByDeployChannel,
   getRepositoryDataByServer,
-  getSlackUserFromJira
-  
 };
