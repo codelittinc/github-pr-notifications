@@ -1,10 +1,31 @@
 import Octokit from '@octokit/rest';
 
 class Github {
-  static async getCommits(pullRequestId, owner, repository) {
-    const octokit = new Octokit({
+  constructor() {
+    this.auth_key = process.env.GIT_AUTH;
+  }
+
+  async setClient() {
+    this.client = await new Octokit.Octokit({
       auth: process.env.GIT_AUTH
     });
+  }
+
+  static async getClient() {
+    return (await Github.getInstance()).client;
+  }
+
+  static async getInstance() {
+    if (!Github.instance) {
+      Github.instance = new Github();
+      await Github.instance.setClient();
+    }
+    return Github.instance;
+  }
+
+  static async getCommits(pullRequestId, owner, repository) {
+    const octokit = await Github.getClient();
+
     const commits = await octokit.pulls.listCommits({
       owner,
       repo: repository,
@@ -15,9 +36,8 @@ class Github {
   }
 
   static async getPullRequest({ pullRequestId, owner, repository }) {
-    const octokit = new Octokit({
-      auth: process.env.GIT_AUTH
-    });
+    const octokit = await Github.getClient();
+
     const commits = await octokit.pulls.get({
       owner,
       repo: repository,
@@ -27,16 +47,8 @@ class Github {
     return commits.data;
   }
 
-  static async createPullRequest({
-    owner,
-    repo,
-    title,
-    head,
-    base,
-  }) {
-    const octokit = new Octokit({
-      auth: process.env.GIT_AUTH
-    });
+  static async createPullRequest({ owner, repo, title, head, base }) {
+    const octokit = await Github.getClient();
 
     const pull = await octokit.pulls.create({
       owner,
@@ -49,32 +61,20 @@ class Github {
     return pull.data;
   }
 
-  static async mergePullRequest({
-    owner,
-    repo,
-    number
-  }) {
-    const octokit = new Octokit({
-      auth: process.env.GIT_AUTH
-    });
+  static async mergePullRequest({ owner, repo, number }) {
+    const octokit = await Github.getClient();
+
     const pull = await octokit.pulls.merge({
       owner,
       repo,
       pull_number: number,
-      //      merge_method: 'rebase'
     });
 
     return pull.data;
   }
 
-  static async deleteBranch({
-    owner,
-    repo,
-    ref,
-  }) {
-    const octokit = new Octokit({
-      auth: process.env.GIT_AUTH
-    });
+  static async deleteBranch({ owner, repo, ref }) {
+    const octokit = await Github.getClient();
 
     await octokit.git.deleteRef({
       owner,
@@ -83,14 +83,8 @@ class Github {
     });
   }
 
-  static async listBranchCommits({
-    owner,
-    repo,
-    branch,
-  }) {
-    const octokit = new Octokit({
-      auth: process.env.GIT_AUTH
-    });
+  static async listBranchCommits({ owner, repo, branch }) {
+    const octokit = await Github.getClient();
 
     const response = await octokit.repos.listCommits({
       owner,
@@ -101,15 +95,8 @@ class Github {
     return response.data;
   }
 
-  static async compareBranchesCommits({
-    owner,
-    repo,
-    base,
-    head
-  }) {
-    const octokit = new Octokit({
-      auth: process.env.GIT_AUTH
-    });
+  static async compareBranchesCommits({ owner, repo, base, head }) {
+    const octokit = await Github.getClient();
 
     const response = await octokit.repos.compareCommits({
       owner,
@@ -121,13 +108,8 @@ class Github {
     return response.data;
   }
 
-  static async listReleases({
-    owner,
-    repo,
-  }) {
-    const octokit = new Octokit({
-      auth: process.env.GIT_AUTH
-    });
+  static async listReleases({ owner, repo }) {
+    const octokit = Github.getClient();
 
     const response = await octokit.repos.listReleases({
       owner,
@@ -146,9 +128,7 @@ class Github {
     body,
     prerelease
   }) {
-    const octokit = new Octokit({
-      auth: process.env.GIT_AUTH
-    });
+    const octokit = await Github.getClient();
 
     const response = await octokit.repos.createRelease({
       owner,
@@ -163,16 +143,8 @@ class Github {
     return response.data;
   }
 
-  static async updateRelease({
-    owner,
-    repo,
-    id,
-    prerelease,
-    body
-  }) {
-    const octokit = new Octokit({
-      auth: process.env.GIT_AUTH
-    });
+  static async updateRelease({ owner, repo, id, prerelease, body }) {
+    const octokit = await Github.getClient();
 
     const response = await octokit.repos.updateRelease({
       owner,
