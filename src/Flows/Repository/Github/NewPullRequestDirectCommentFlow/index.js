@@ -1,5 +1,5 @@
-import { SlackRepository, ChannelMessage } from '@services'
-import {  PullRequest } from '@models';
+import { SlackRepository, ChannelMessage, Users } from '@services'
+import { PullRequest } from '@models';
 import pullRequestParser from '../parsers/pullRequestParser'
 
 const getContent = (json) => (
@@ -28,10 +28,11 @@ class NewPullRequestDirectComment {
 
     const channelMessage = new ChannelMessage(channel, slackThreadTS);
     if (mentions) {
-      mentions.forEach((mention) => {
-        const slackUsername = SlackRepository.getSlackUser(mention.replace('@', ''))
-        channelMessage.notifyNewMessage(`@${slackUsername}`);
-      })
+      for (let mention of mentions) {
+        const githubUsername = mention.replace('@', '');
+        const user = await Users.find(githubUsername);
+        channelMessage.notifyNewMessage(`@${user.slack}`);
+      }
     }
   };
 

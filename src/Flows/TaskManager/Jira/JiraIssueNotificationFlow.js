@@ -1,4 +1,4 @@
-import {Slack, SlackRepository, Users} from '@services';
+import {Slack, Users} from '@services';
 
 export default class JiraIssueNotificationFlow {
   constructor(data) {

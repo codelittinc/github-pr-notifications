@@ -1,6 +1,5 @@
-import Slack from './Slack.js';
 import SlackReaction from '../enums/SlackReaction.js';
-import SlackRepository from './SlackRepository.js';
+import { Slack, Users } from '@services';
 
 class DirectMessage {
   constructor(ghUsername) {
@@ -23,9 +22,10 @@ class DirectMessage {
   }
 
   async send(message) {
+    const user = await Users.find(this.ghUsername)
     return await Slack.getInstance().sendDirectMessage({
       message,
-      username: SlackRepository.getSlackUser(this.ghUsername),
+      username: user.slack,
     });
   }
 }

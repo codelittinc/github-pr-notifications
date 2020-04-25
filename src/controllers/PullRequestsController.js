@@ -1,4 +1,4 @@
-import { SlackRepository } from '../services'
+import { SlackRepository, Users } from '../services'
 import { PullRequest } from '../models';
 
 export default class PullRequestsController {
@@ -33,7 +33,8 @@ const getPullRequestsJSON = async (prs) => {
 
   await Promise.all(prs.map(pr => pr.getChanges()));
 
-  return prs.map(pr => {
+  const finalPrs = [];
+  for (let pr of prs) {
     const approvedReviews = pr.reviews.filter(r => r.state === 'approved')
     const reprovedReviews = pr.reviews.filter(r => r.state === 'changes_requested')
 
@@ -47,10 +48,24 @@ const getPullRequestsJSON = async (prs) => {
       return (r.updatedAt || r.createdAt) < (latestChange || {}).createdAt
     });
 
-    const outdatedReviewsUsernames = outdatedReviews.map(a => a.username);
+    const approvedByList = []
 
-    const approvedByList = approvedReviews.map(r => SlackRepository.getSlackUser(r.username));
-    const repprovedByList = reprovedReviews.map(r => SlackRepository.getSlackUser(r.username));
+    for (let item of approvedReviews) {
+      const user = await Users.find(item.username);
+      approvedByList.push(user.slack)
+    }
+
+    const repprovedByList = [];
+    for (let item of reprovedReviews) {
+      const user = await Users.find(item.username);
+      repprovedByList.push(user.slack)
+    }
+
+    const outdatedReviewsUsernames = [];
+    for (let item of outdatedReviews) {
+      const user = await Users.find(item.username);
+      outdatedReviewsUsernames.push(user.slack)
+    }
 
     const getListOrFirst = (list) => {
       if (list.length > 1) {
@@ -60,13 +75,14 @@ const getPullRequestsJSON = async (prs) => {
       }
     }
 
-    return {
+    finalPrs.push({
       title: pr.title,
       link: pr.link,
       ci_state: pr.ciState ? pr.ciState : 'unavailable',
       approved_by: getListOrFirst(approvedByList),
       reproved_by: getListOrFirst(repprovedByList),
       new_changes_after_last_review_of: getListOrFirst(outdatedReviewsUsernames)
-    }
-  })
+    })
+  }
+  return finalPrs;
 }
