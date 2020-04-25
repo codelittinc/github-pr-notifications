@@ -20,21 +20,21 @@
   },
   "homepage": "https://github.com/codelittinc/github-pr-notifications#readme",
   "dependencies": {
-    "@octokit/rest": "^16.36.0",
+    "@octokit/rest": "^17.6.0",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "moment": "^2.24.0",
-    "mongodb": "^3.4.1",
+    "mongodb": "^3.5.6",
     "slack-notifications-client": "git://github.com/codelittinc/slack-notifications-client.git"
   },
   "devDependencies": {
-    "expect": "^25.2.7",
+    "expect": "^25.4.0",
     "mocha": "^7.1.1",
-    "nodemon": "^2.0.2",
+    "nodemon": "^2.0.3",
     "pry": "^0.8.7",
-    "sinon": "^9.0.1"
+    "sinon": "^9.0.2"
   },
   "aliases": {
     "@client": "./src/client",
