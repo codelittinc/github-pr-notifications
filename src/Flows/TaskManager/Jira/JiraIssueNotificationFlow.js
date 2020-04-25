@@ -1,4 +1,4 @@
-import {Slack, SlackRepository} from '@services';
+import {Slack, SlackRepository, Users} from '@services';
 
 export default class JiraIssueNotificationFlow {
   constructor(data) {
@@ -10,14 +10,17 @@ export default class JiraIssueNotificationFlow {
     const { body } = comment;
     const { key } = issue;
 
-    const jiraMentions = []
     const mentionRegex = new RegExp(/\[~accountid:([a-z0-9]+)\]/g);
     let z;
+    const slackMentions = []
     while (null != (z = mentionRegex.exec(body))) {
-      jiraMentions.push(z[1])
+      const jiraUsername = z[1];
+      const user = await Users.find(jiraUsername)
+      if (user) {
+        slackMentions.push(user.slack)
+      }
     }
 
-    const slackMentions = jiraMentions.map(jiraMention => SlackRepository.getSlackUserFromJira(jiraMention)).filter(Boolean)
     slackMentions.forEach(mention => {
       const text = `Hey there is a new mention for you on Jira https://codelitt.atlassian.net/browse/${key}`;
       Slack.getInstance().sendDirectMessage({

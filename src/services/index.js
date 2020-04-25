@@ -7,8 +7,10 @@ import Reactji from './Reactji.js';
 import Slack from './Slack.js';
 import SlackRepository from './SlackRepository.js';
 import Jira from './Jira.js';
+import Users from './Users.js'
 
 export {
+  Users,
   ChannelMessage,
   Database,
   DirectMessage,
