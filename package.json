@@ -9,6 +9,9 @@
     "start": "node --es-module-specifier-resolution=node --experimental-modules --experimental-json-modules --loader ./loader.js src/index.js",
     "start:dev": "nodemon --es-module-specifier-resolution=node --experimental-modules --experimental-json-modules --loader ./loader.js src/index.js"
   },
+  "engines": {
+    "node": "14.x"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/codelittinc/github-pr-notifications.git"
