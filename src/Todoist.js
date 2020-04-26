@@ -51,6 +51,9 @@ const taskTemplates = [
         name: "Review company goals",
       },
       {
+        name: "Schedule deep work time",
+      },
+      {
         name: "Prioritize daily tasks",
       },
     ]
