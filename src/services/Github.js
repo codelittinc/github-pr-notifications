@@ -109,7 +109,7 @@ class Github {
   }
 
   static async listReleases({ owner, repo }) {
-    const octokit = Github.getClient();
+    const octokit = await Github.getClient();
 
     const response = await octokit.repos.listReleases({
       owner,
