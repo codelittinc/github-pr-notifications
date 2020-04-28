@@ -6,7 +6,8 @@ class RootFlow {
   }
 
   async run() {
-   (await this.getFlow()).run();
+    const flow = await this.getFlow();
+    flow.run()
   }
 
   async getFlow() {
