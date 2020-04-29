@@ -50,6 +50,7 @@ const getPullRequestsJSON = async (prs) => {
 
     const approvedByList = []
 
+
     for (let item of approvedReviews) {
       const user = await Users.find(item.username);
       approvedByList.push(user.slack)
@@ -64,7 +65,9 @@ const getPullRequestsJSON = async (prs) => {
     const outdatedReviewsUsernames = [];
     for (let item of outdatedReviews) {
       const user = await Users.find(item.username);
-      outdatedReviewsUsernames.push(user.slack)
+      if (item.username !== pr.username) {
+        outdatedReviewsUsernames.push(user.slack)
+      }
     }
 
     const getListOrFirst = (list) => {
