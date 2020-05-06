@@ -5,6 +5,7 @@ import PullRequest from './PullRequest';
 import PullRequestReview from './PullRequestReview';
 import PullRequestChange from './PullRequestChange';
 import SlackMessage from './SlackMessage';
+import Request from './Request';
 
 export {
   BaseModel,
@@ -13,5 +14,6 @@ export {
   PullRequest,
   PullRequestReview,
   PullRequestChange,
-  SlackMessage
+  SlackMessage,
+  Request
 };

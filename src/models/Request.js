@@ -5,8 +5,10 @@ class Request extends BaseModel {
 
   toJson() {
     return {
-      json: this.json,
+      data: this.data,
       processed: this.processed,
+      flow: this.flow,
+      error: this.error
     }
   }
 }
