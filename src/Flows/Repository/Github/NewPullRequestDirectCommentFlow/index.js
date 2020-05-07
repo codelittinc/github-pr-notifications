@@ -31,7 +31,9 @@ class NewPullRequestDirectComment {
       for (let mention of mentions) {
         const githubUsername = mention.replace('@', '');
         const user = await Users.find(githubUsername);
-        channelMessage.notifyNewMessage(`@${user.slack}`);
+        if (user) {
+          channelMessage.notifyNewMessage(`@${user.slack}`);
+        }
       }
     }
   };
