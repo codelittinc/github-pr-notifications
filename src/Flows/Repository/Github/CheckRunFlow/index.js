@@ -40,7 +40,8 @@ class CheckRunFlow {
   };
 
   static async isFlow(json) {
-    return json.commit && (json.state === 'success' || json.state === 'failure' || json.state === 'pending');
+    const { commit, state, branches } = json;
+    return commit && (state === 'success' || state === 'failure' || state === 'pending') && branches.length > 0;
   };
 }
 
