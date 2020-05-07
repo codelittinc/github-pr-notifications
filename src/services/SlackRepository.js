@@ -99,6 +99,14 @@ const repositoriesIdentifiers = {
     channel: 'test-channel',
     owner: 'codelittinc'
   },
+  'codelitt-design-system': {
+    devGroup: '@design-system-devs',
+    channel: 'team-codelitt-design-system-dev',
+    deployChannel: 'team-design-system-deploy',
+    owner: 'codelittinc',
+    supports_deploy: true
+  },
+
 }
 
 const getRepositoryData = (repositoryName) => repositoriesIdentifiers[repositoryName];
