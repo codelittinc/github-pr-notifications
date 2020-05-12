@@ -76,11 +76,14 @@ class Github {
   static async deleteBranch({ owner, repo, ref }) {
     const octokit = await Github.getClient();
 
-    await octokit.git.deleteRef({
-      owner,
-      repo,
-      ref: `heads/${ref}`,
-    });
+    try {
+      await octokit.git.deleteRef({
+        owner,
+        repo,
+        ref: `heads/${ref}`,
+      });
+    } catch (e) {
+    }
   }
 
   static async listBranchCommits({ owner, repo, branch }) {
