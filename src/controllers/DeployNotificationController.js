@@ -13,7 +13,7 @@ export default class DeployNotificationController {
       await flow.run()
     } catch (e) {
       Slack.getInstance().sendDirectMessage({
-        message: JSON.stringify(body),
+        message: 'deploy notification ' + JSON.stringify(body),
         username: SlackRepository.getAdminSlackUser()
       });
     }
