@@ -106,6 +106,14 @@ const repositoriesIdentifiers = {
     owner: 'codelittinc',
     supports_deploy: true
   },
+  'foodlit': {
+    devGroup: '@farm-to-fork-devs',
+    channel: 'team-farm-to-fork-dev',
+    deployChannel: 'team-farm-to-fork-deploy',
+    owner: 'codelittinc',
+    supports_deploy: true,
+    servers: ['dev-foodlit', 'qa-foodlit', 'prod-foodlit']
+  },
 
 }
 
