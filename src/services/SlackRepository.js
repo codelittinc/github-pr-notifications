@@ -112,6 +112,7 @@ const repositoriesIdentifiers = {
     deployChannel: 'team-farm-to-fork-deploy',
     owner: 'codelittinc',
     supports_deploy: true,
+    deploy_with_tag: true,
     servers: ['dev-foodlit', 'qa-foodlit', 'prod-foodlit']
   },
 
