@@ -30,7 +30,6 @@
     "express": "^4.17.1",
     "moment": "^2.24.0",
     "mongodb": "^3.5.6",
-    "newrelic": "^6.7.1",
     "slack-notifications-client": "git://github.com/codelittinc/slack-notifications-client.git"
   },
   "devDependencies": {
