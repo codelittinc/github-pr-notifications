@@ -1,6 +1,9 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+import nr from 'newrelic';
+
+
 import bodyParser from 'body-parser';
 import express from 'express';
 import {
