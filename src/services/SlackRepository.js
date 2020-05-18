@@ -113,7 +113,7 @@ const repositoriesIdentifiers = {
     owner: 'codelittinc',
     supports_deploy: true,
     deploy_with_tag: true,
-    servers: ['dev-foodlit', 'qa-foodlit', 'prod-foodlit']
+    servers: ['dev-foodlit', 'qa-foodlit', 'prod-foodlitt']
   },
 
 }
