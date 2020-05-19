@@ -53,7 +53,7 @@ class TagReleaseFlow {
 
     const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(channel_name);
 
-    return repositoryData.deploy_with_tag;
+    return repositoryData.deployWithTag;
   };
 }
 

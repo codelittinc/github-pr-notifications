@@ -11,7 +11,7 @@ const repositoriesIdentifiers = {
     deployChannel: 'test-gh-deploy',
     owner: 'codelittinc',
     supportsDeploy: true,
-    deploy_with_tag: false
+    deployWithTag: false
   },
   'codelitt-v2': {
     devGroup: '@website-devs',
@@ -20,7 +20,7 @@ const repositoriesIdentifiers = {
     owner: 'codelittinc',
     supportsDeploy: true,
     servers: ['dev-website-codelitt', 'qa-codelitt-website', 'prod-codelitt-website'],
-    deploy_with_tag: true
+    deployWithTag: true
   },
   'rolli': {
     devGroup: '@rolli-devs',
@@ -29,7 +29,7 @@ const repositoriesIdentifiers = {
     owner: 'codelittinc',
     supportsDeploy: true,
     servers: ['dev-rolli', 'qa-rolli', 'prod-rolli'],
-    deploy_with_tag: true
+    deployWithTag: true
   },
   'team-maker': {
     devGroup: '@team-maker-devs',
@@ -112,7 +112,7 @@ const repositoriesIdentifiers = {
     deployChannel: 'team-farm-to-fork-deploy',
     owner: 'codelittinc',
     supportsDeploy: true,
-    deploy_with_tag: true,
+    deployWithTag: true,
     servers: ['dev-foodlit', 'qa-foodlit', 'prod-foodlitt']
   },
 

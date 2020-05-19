@@ -116,7 +116,7 @@ class ReleaseFlow {
 
     const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(channel_name);
 
-    return !repositoryData.deploy_with_tag;
+    return !repositoryData.deployWithTag;
   };
 
   static getSlackResponse(json) {
