@@ -3,14 +3,14 @@ const repositoriesIdentifiers = {
     devGroup: '@engineers',
     channel: 'team-automations-dev',
     owner: 'codelittinc',
-    supports_deploy: false
+    supportsDeploy: false
   },
   'gh-hooks-repo-test': {
     devGroup: '@elbigode',
     channel: 'test-gh',
     deployChannel: 'test-gh-deploy',
     owner: 'codelittinc',
-    supports_deploy: true,
+    supportsDeploy: true,
     deploy_with_tag: false
   },
   'codelitt-v2': {
@@ -18,7 +18,7 @@ const repositoriesIdentifiers = {
     channel: 'team-website-dev',
     deployChannel: 'team-website-deploy',
     owner: 'codelittinc',
-    supports_deploy: true,
+    supportsDeploy: true,
     servers: ['dev-website-codelitt', 'qa-codelitt-website', 'prod-codelitt-website'],
     deploy_with_tag: true
   },
@@ -27,7 +27,7 @@ const repositoriesIdentifiers = {
     channel: 'team-rolli-dev',
     deployChannel: 'team-rolli-deploy',
     owner: 'codelittinc',
-    supports_deploy: true,
+    supportsDeploy: true,
     servers: ['dev-rolli', 'qa-rolli', 'prod-rolli'],
     deploy_with_tag: true
   },
@@ -36,7 +36,7 @@ const repositoriesIdentifiers = {
     channel: 'team-teammaker-dev',
     deployChannel: 'wg-teammaker-deploy',
     owner: 'codelittinc',
-    supports_deploy: true,
+    supportsDeploy: true,
     servers: ['dev-team-maker', 'qa-team-maker', 'prod-team-maker']
   },
   'zonda': {
@@ -45,7 +45,7 @@ const repositoriesIdentifiers = {
     deployChannel: 'wg-zonda-deploy',
     owner: 'codelittinc',
     servers: ['dev-zonda', 'qa-zonda', 'prod-zonda'],
-    supports_deploy: true,
+    supportsDeploy: true,
   },
   'ay-design-library': {
     devGroup: '@ay-devs',
@@ -62,7 +62,7 @@ const repositoriesIdentifiers = {
     channel: 'team-ay-pia-web-dev',
     owner: 'codelittinc',
     deployChannel: 'team-pia-web-deploy',
-    supports_deploy: true,
+    supportsDeploy: true,
     servers: ['dev-ay-pia-web']
   },
   'ay-excel-import-api': {
@@ -80,7 +80,7 @@ const repositoriesIdentifiers = {
     channel: 'team-ay-pia-dev',
     deployChannel: 'team-ay-pia-deploy',
     owner: 'codelittinc',
-    supports_deploy: true
+    supportsDeploy: true
   },
   'ay-users-api': {
     devGroup: '@ay-backend-devs',
@@ -92,7 +92,7 @@ const repositoriesIdentifiers = {
     channel: 'team-website-dev',
     deployChannel: 'team-blog-deploy',
     owner: 'codelittinc',
-    supports_deploy: false,
+    supportsDeploy: false,
     servers: ['dev-codelitt-blog']
   },
   'test-channel': {
@@ -104,14 +104,14 @@ const repositoriesIdentifiers = {
     channel: 'team-codelitt-design-system-dev',
     deployChannel: 'team-design-system-deploy',
     owner: 'codelittinc',
-    supports_deploy: true
+    supportsDeploy: true
   },
   'foodlitt': {
     devGroup: '@farm-to-fork-devs',
     channel: 'team-farm-to-fork-dev',
     deployChannel: 'team-farm-to-fork-deploy',
     owner: 'codelittinc',
-    supports_deploy: true,
+    supportsDeploy: true,
     deploy_with_tag: true,
     servers: ['dev-foodlit', 'qa-foodlit', 'prod-foodlitt']
   },

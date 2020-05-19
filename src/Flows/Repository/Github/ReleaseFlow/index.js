@@ -123,7 +123,7 @@ class ReleaseFlow {
     const { channel_name } = json;
     const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(channel_name);
 
-    if (!repositoryData && (repositoryData && !repositoryData.supports_deploy)) {
+    if (!repositoryData && (repositoryData && !repositoryData.supportsDeploy)) {
       return "This channel doesn't support automatic deploys";
     }
   };
