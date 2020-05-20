@@ -17,7 +17,7 @@ class ReleaseFlow {
   static async start(json) {
     const { channel_name, text, user_name } = json;
 
-    const repositoryData = Repositories.getRepositoryDataByDeployChannel(channel_name);
+    const repositoryData = await Repositories.getRepositoryDataByDeployChannel(channel_name);
     const { deployChannel, owner, repository } = repositoryData;
 
     const [event, environment] = text.split(' ');
@@ -102,7 +102,7 @@ class ReleaseFlow {
     }
   };
 
-  static isFlow(json) {
+  static async isFlow(json) {
     const { text, channel_name } = json;
 
     if (!text) {
@@ -114,14 +114,14 @@ class ReleaseFlow {
       return;
     }
 
-    const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(channel_name);
+    const repositoryData = await Repositories.getRepositoryDataByDeployChannel(channel_name);
 
     return !repositoryData.deployWithTag;
   };
 
-  static getSlackResponse(json) {
+  static async getSlackResponse(json) {
     const { channel_name } = json;
-    const repositoryData = SlackRepository.Repositories(channel_name);
+    const repositoryData = await Repositories.Repositories(channel_name);
 
     if (!repositoryData && (repositoryData && !repositoryData.supportsDeploy)) {
       return "This channel doesn't support automatic deploys";

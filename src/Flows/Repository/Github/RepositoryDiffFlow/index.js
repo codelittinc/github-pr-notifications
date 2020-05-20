@@ -1,4 +1,4 @@
-import { SlackRepository, Github, Slack } from '@services'
+import { Repositories, Github, Slack } from '@services'
 
 const config = {
   update: {
@@ -27,7 +27,7 @@ class RepositoryDiffFlow {
   static async start(json) {
     const { channel_name, text, user_name } = json;
 
-    const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(channel_name);
+    const repositoryData = await Repositories.getRepositoryDataByDeployChannel(channel_name);
     const { owner, repository } = repositoryData;
 
     const [event, environment] = text.split(' ');

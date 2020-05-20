@@ -118,17 +118,6 @@ const repositoriesIdentifiers = {
 }
 
 const getRepositoryData = (repositoryName) => repositoriesIdentifiers[repositoryName];
-const getRepositoryDataByDeployChannel = (channel) => {
-  const key = Object.keys(repositoriesIdentifiers).find(k => {
-    const v = repositoriesIdentifiers[k];
-    return v.deployChannel === channel;
-  })
-
-  return {
-    ...(repositoriesIdentifiers[key] || {}),
-    repository: key
-  }
-};
 
 const getAdminSlackUser = () => 'kaiomagalhaes';
 
@@ -136,5 +125,4 @@ export default {
   getRepositoryData,
   data: repositoriesIdentifiers,
   getAdminSlackUser,
-  getRepositoryDataByDeployChannel,
 };

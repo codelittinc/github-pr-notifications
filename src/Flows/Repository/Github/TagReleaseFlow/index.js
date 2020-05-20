@@ -1,4 +1,4 @@
-import { SlackRepository, Github, Slack } from '../../../../services/index.js'
+import { Repositories, Github, Slack } from '../../../../services/index.js'
 
 import startReleaseFlow from './startReleaseFlow.js';
 import startReleaseCandidateFlow from './startReleaseCandidateFlow.js';
@@ -7,7 +7,7 @@ class TagReleaseFlow {
   static async start(json, callback) {
     const { user_name, channel_name, text } = json;
 
-    const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(channel_name);
+    const repositoryData = await Repositories.getRepositoryDataByDeployChannel(channel_name);
     const { owner, repository } = repositoryData;
 
     const [_, environment] = text.split(' ');
@@ -39,7 +39,7 @@ class TagReleaseFlow {
     return; 
   }
 
-  static isFlow(json) {
+  static async isFlow(json) {
     const { text, channel_name } = json;
 
     if (!text) {
@@ -51,7 +51,7 @@ class TagReleaseFlow {
       return;
     }
 
-    const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(channel_name);
+    const repositoryData = await Repositories.getRepositoryDataByDeployChannel(channel_name);
 
     return repositoryData.deployWithTag;
   };

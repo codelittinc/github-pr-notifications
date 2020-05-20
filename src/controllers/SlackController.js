@@ -28,7 +28,7 @@ export default class SlackController {
     }
 
     if (!stop) {
-      message = Flow.getSlackResponse(json);
+      message = await Flow.getSlackResponse(json);
       stop = !!message;
     }
 
