@@ -114,8 +114,7 @@ const repositoriesIdentifiers = {
     supportsDeploy: true,
     deployWithTag: true,
     servers: ['dev-foodlit', 'qa-foodlit', 'prod-foodlitt']
-  },
-
+  }
 }
 
 const getRepositoryData = (repositoryName) => repositoriesIdentifiers[repositoryName];

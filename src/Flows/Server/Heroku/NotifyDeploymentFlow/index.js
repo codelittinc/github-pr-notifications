@@ -1,4 +1,4 @@
-import { SlackRepository, Slack } from '@services'
+import { SlackRepository, Slack, Repositories } from '@services'
 
 class NotifyDeploymentFlow {
   constructor(data) {
@@ -7,12 +7,12 @@ class NotifyDeploymentFlow {
 
   async run() {
     const { app } = this.data;
-    const repositoryData = SlackRepository.getRepositoryDataByServer(app)
+    const repositoryData = await Repositories.getRepositoryDataByServer(app);
 
     if (repositoryData) {
       const { deployChannel } = repositoryData;
       Slack.getInstance().sendMessage({
-        message: `The deploy was finished with success!`,
+        message: this.getMessage(repositoryData, app),
         channel: deployChannel
       });
     } else {
@@ -22,6 +22,11 @@ class NotifyDeploymentFlow {
       });
     }
   };
+
+  getMessage(repository, app) {
+    const environment = app.match(/qa|prod/)[0];
+    return `Deploy of the project *${repository.name}* to *${environment.toUpperCase()}* was finished with success!`;
+  }
 
   isFlow() {
     return !!this.data.app;
