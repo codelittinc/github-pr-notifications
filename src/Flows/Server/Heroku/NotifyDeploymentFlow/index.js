@@ -6,13 +6,21 @@ class NotifyDeploymentFlow {
   }
 
   async run() {
-    const { app } = this.data;
-    const repositoryData = await Repositories.getRepositoryDataByServer(app);
+    const { app, data } = this.data;
+    let appName;
+
+    if (app) {
+      appName = app;
+    } else {
+      appName = data.app.name;
+    }
+
+    const repositoryData = await Repositories.getRepositoryDataByServer(appName);
 
     if (repositoryData) {
       const { deployChannel } = repositoryData;
       Slack.getInstance().sendMessage({
-        message: this.getMessage(repositoryData, app),
+        message: this.getMessage(repositoryData, appName),
         channel: deployChannel
       });
     } else {
@@ -24,12 +32,12 @@ class NotifyDeploymentFlow {
   };
 
   getMessage(repository, app) {
-    const environment = app.match(/qa|prod/)[0];
+    const environment = app.match(/qa|prod|dev/)[0];
     return `Deploy of the project *${repository.name}* to *${environment.toUpperCase()}* was finished with success!`;
   }
 
   isFlow() {
-    return !!this.data.app;
+    return !!this.data.app || (!!this.data.data && this.data.data.app);
   };
 }
 

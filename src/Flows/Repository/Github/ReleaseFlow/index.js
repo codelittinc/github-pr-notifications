@@ -1,4 +1,4 @@
-import { SlackRepository, Github, Slack } from '../../../../services/index.js'
+import { Repositories, SlackRepository, Github, Slack } from '../../../../services/index.js'
 
 const config = {
   update: {
@@ -17,7 +17,7 @@ class ReleaseFlow {
   static async start(json) {
     const { channel_name, text, user_name } = json;
 
-    const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(channel_name);
+    const repositoryData = Repositories.getRepositoryDataByDeployChannel(channel_name);
     const { deployChannel, owner, repository } = repositoryData;
 
     const [event, environment] = text.split(' ');
@@ -121,7 +121,7 @@ class ReleaseFlow {
 
   static getSlackResponse(json) {
     const { channel_name } = json;
-    const repositoryData = SlackRepository.getRepositoryDataByDeployChannel(channel_name);
+    const repositoryData = SlackRepository.Repositories(channel_name);
 
     if (!repositoryData && (repositoryData && !repositoryData.supportsDeploy)) {
       return "This channel doesn't support automatic deploys";

@@ -17,4 +17,13 @@ export default class Repositories {
       return servers.includes(server);
     });
   }
+
+  static async getRepositoryDataByDeployChannel(channel) {
+    const repositories = await this.getRepositories();
+    const repository = repositories.find(rep => rep.deployChannel == channel);
+    return {
+      ...repository,
+      repository: repository.name
+    }
+  }
 }
