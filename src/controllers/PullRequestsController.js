@@ -1,11 +1,11 @@
-import { SlackRepository, Users } from '../services'
+import { Repositories, SlackRepository, Users } from '../services'
 import { PullRequest } from '../models';
 
 export default class PullRequestsController {
   static async index(req, res) {
     const devGroup = req.params.devGroup;
 
-    const repositoryNames = Object.keys(SlackRepository.data);
+    const repositoryNames = (await Repositories.getRepositories()).map(p => p.name);
 
     let repositoriesQuery;
 

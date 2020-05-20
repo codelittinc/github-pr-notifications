@@ -25,6 +25,7 @@ export default class Repositories {
       repository: repository.name
     }
   }
+
   static async getRepositoryData(repositoryName) {
     const repositories = await this.getRepositories();
     return repositories.find(rep => rep.name === repositoryName);
