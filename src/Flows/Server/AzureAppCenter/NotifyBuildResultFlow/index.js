@@ -1,4 +1,4 @@
-import { SlackRepository, Slack } from '@services';
+import { Repositories, Slack } from '@services';
 
 const APPS = {
   'Property Intelligence': {
@@ -13,7 +13,7 @@ class NotifyBuildResultFlow {
 
   async run() {
     const { app_name, build_status, build_id } = this.data;
-    const slackRepository = SlackRepository.getRepositoryData(APPS[app_name].repo);
+    const slackRepository = await Repositories.getRepositoryData(APPS[app_name].repo);
     const { deployChannel } = slackRepository;
 
     return await Slack.getInstance().sendMessage({

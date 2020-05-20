@@ -1,4 +1,4 @@
-import { SlackRepository, Reactji, Github, ChannelMessage } from '@services'
+import { Repositories, Reactji, Github, ChannelMessage } from '@services'
 import { SlackMessage, PullRequest, Commit, CheckRun } from '@models';
 import pullRequestParser from '../parsers/pullRequestParser'
 
@@ -7,7 +7,7 @@ class NewPullRequestFlow {
     const data = pullRequestParser.parse(json);
     const pr = new PullRequest(data)
 
-    const repositoryData = SlackRepository.getRepositoryData(pr.repositoryName)
+    const repositoryData = await Repositories.getRepositoryData(pr.repositoryName)
 
     const { devGroup, channel } = repositoryData;
 

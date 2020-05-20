@@ -1,4 +1,4 @@
-import { SlackRepository, ChannelMessage, Github, DirectMessage } from '@services'
+import { Repositories, ChannelMessage, Github, DirectMessage } from '@services'
 import { PullRequestReview, PullRequest } from '@models';
 import pullRequestParser from '../parsers/pullRequestParser'
 
@@ -30,7 +30,7 @@ class NewReviewSubmissionFlow {
     }).createOrLoadByUsernameAndPR()
 
     const slackThreadTS = mainSlackMessage.ts;
-    const repositoryData = SlackRepository.getRepositoryData(pr.repositoryName)
+    const repositoryData = await Repositories.getRepositoryData(pr.repositoryName)
     const { channel } = repositoryData;
 
     const channelMessage = new ChannelMessage(channel, slackThreadTS);

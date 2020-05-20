@@ -1,4 +1,4 @@
-import { SlackRepository, ChannelMessage, Users } from '@services'
+import { Repositories, ChannelMessage, Users } from '@services'
 import { PullRequest } from '@models';
 import pullRequestParser from '../parsers/pullRequestParser'
 
@@ -21,7 +21,7 @@ class NewPullRequestDirectComment {
     }
 
     const slackThreadTS = mainSlackMessage.ts;
-    const repositoryData = SlackRepository.getRepositoryData(pr.repositoryName)
+    const repositoryData = await Repositories.getRepositoryData(pr.repositoryName)
     const { channel } = repositoryData;
 
     const mentions = message.match(/@[a-zA-Z0-9]+/g)

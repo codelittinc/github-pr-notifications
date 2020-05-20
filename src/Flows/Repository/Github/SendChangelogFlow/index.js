@@ -1,11 +1,11 @@
-import { SlackRepository, Slack, Github } from '@services'
+import { Repositories, Slack, Github } from '@services'
 import { PullRequest } from '@models';
 import pullRequestParser from '../parsers/pullRequestParser'
 
 class SendChangelogFlow {
   static async start(json) {
     const pr = await new PullRequest(pullRequestParser.parse(json)).load();
-    const repositoryData = SlackRepository.getRepositoryData(pr.repositoryName)
+    const repositoryData = await Repositories.getRepositoryData(pr.repositoryName)
 
     const { deployChannel } = repositoryData;
 

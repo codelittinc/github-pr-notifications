@@ -1,4 +1,4 @@
-import { SlackRepository, ChannelMessage } from '@services'
+import { Repositories, ChannelMessage } from '@services'
 import { PullRequest, PullRequestChange } from '@models';
 import pushChangeParser from '../parsers/pushChangeParser'
 
@@ -28,7 +28,7 @@ class UpdatePullRequestCodeFlow {
 
     const slackThreadTS = mainSlackMessage.ts;
 
-    const repositoryData = SlackRepository.getRepositoryData(repositoryName)
+    const repositoryData = await Repositories.getRepositoryData(repositoryName)
     const { channel } = repositoryData;
 
     const channelMessage = new ChannelMessage(channel, slackThreadTS)

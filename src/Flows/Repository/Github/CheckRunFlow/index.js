@@ -1,4 +1,4 @@
-import { SlackRepository, Reactji, DirectMessage } from '../../../../services/index.js';
+import { Repositories, Reactji, DirectMessage } from '../../../../services/index.js';
 import { PullRequest, CheckRun } from '../../../../models/index.js';
 
 class CheckRunFlow {
@@ -24,7 +24,7 @@ class CheckRunFlow {
       return;
     }
 
-    const repositoryData = SlackRepository.getRepositoryData(pr.repositoryName)
+    const repositoryData = await Repositories.getRepositoryData(pr.repositoryName)
 
     const { channel } = repositoryData;
 
