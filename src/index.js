@@ -18,7 +18,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-withHealthMonitor(app)
+withHealthMonitor(app, 'Roadrunner')
 
 const PORT = process.env.PORT || 3000;
 
