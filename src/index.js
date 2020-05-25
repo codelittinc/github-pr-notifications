@@ -18,7 +18,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-withHealthMonitor(app, 'Roadrunner')
+withHealthMonitor(app, 'codelitt-roadrunner-node')
 
 const PORT = process.env.PORT || 3000;
 
