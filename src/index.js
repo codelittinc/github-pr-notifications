@@ -11,6 +11,7 @@ import {
   PullRequestsController,
   SlackController,
 } from './controllers';
+import { SlackRepository, Slack } from '@services'
 
 import withHealthMonitor from '@codelittinc/health-monitor-node';
 
@@ -42,5 +43,12 @@ app.post('/flows', FlowsController.create);
 app.post('/notify-deploy', DeployNotificationController.create);
 app.post('/slack', SlackController.create);
 app.get('/requests/:id', FlowsController.show)
+app.post('/error', (req, res) => {
+  Slack.getInstance().sendDirectMessage({
+    message: 'ERROR NOTIFICATION GRAYLOGS' + JSON.stringify(req.body),
+    username: SlackRepository.getAdminSlackUser()
+  });
+})
+
 
 app.listen(PORT, () => console.log(`App listening on port ${PORT}!`));
