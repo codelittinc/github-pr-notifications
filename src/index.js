@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import axios from 'axios';
 dotenv.config();
 
 import bodyParser from 'body-parser';
@@ -17,6 +18,15 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use((req, _, next) => {
+  const isPost = req.method == "POST";
+  if (isPost) {
+    const { body } = req;
+    axios.post("http://roadrunner-rails.herokuapp.com/flows", body)
+  }
+  next()
+})
 
 withHealthMonitor(app, 'codelitt-roadrunner-node')
 
