@@ -1,4 +1,3 @@
-import SendRandomJiraIssuesFlow from './SendRandomJiraIssuesFlow';
 import JiraIssueNotificationFlow from './JiraIssueNotificationFlow';
 
 class JiraFlow {
@@ -8,7 +7,6 @@ class JiraFlow {
 
   async getFlow() {
     const flows = [
-      SendRandomJiraIssuesFlow,
       JiraIssueNotificationFlow
     ];
 
