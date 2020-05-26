@@ -23,7 +23,9 @@ app.use((req, _, next) => {
   const isPost = req.method == "POST";
   if (isPost) {
     const { body } = req;
-    axios.post("http://roadrunner-rails.herokuapp.com/flows", body)
+    try {
+      axios.post("http://roadrunner-rails.herokuapp.com/flows", body)
+    } catch(e) {}
   }
   next()
 })
