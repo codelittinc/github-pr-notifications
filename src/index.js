@@ -26,12 +26,12 @@ app.use((req, _, next) => {
     const { body } = req;
     try {
       axios.post("http://roadrunner-rails.herokuapp.com/flows", body)
-    } catch(e) {}
+    } catch (e) { }
   }
   next()
 })
 
-withHealthMonitor(app, 'codelitt-roadrunner-node')
+withHealthMonitor(app)
 
 const PORT = process.env.PORT || 3000;
 
