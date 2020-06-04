@@ -9,14 +9,7 @@ export default class DeployNotificationController {
     const flowName = flow.constructor.name;
 
     console.log(`Start: ${flowName}`)
-    try {
-      await flow.run()
-    } catch (e) {
-      Slack.getInstance().sendDirectMessage({
-        message: 'deploy notification ' + JSON.stringify(body),
-        username: SlackRepository.getAdminSlackUser()
-      });
-    }
+    await flow.run()
     console.log(`End: ${flowName}`)
 
     res.sendStatus(200);

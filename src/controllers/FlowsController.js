@@ -41,7 +41,7 @@ export default class FlowsController {
       request.create()
       console.log(`End: ${flowName}`)
     } catch (e) {
-      console.log("THERE IS AN ERROR")
+      console.log(e)
       request.processed = false;
       request.error = e.toString();
       request.create()

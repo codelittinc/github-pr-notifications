@@ -9,14 +9,12 @@ export default class SlackController {
     let Flow = null;
 
     for (const F of baseFlows) {
-      try {
-        const instance = new F(json);
-        const f = await instance.getFlow(json)
+      const instance = new F(json);
+      const f = await instance.getFlow(json)
 
-        if (f) {
-          Flow = f;
-        }
-      } catch (e) { }
+      if (f) {
+        Flow = f;
+      }
     }
 
     let message;
