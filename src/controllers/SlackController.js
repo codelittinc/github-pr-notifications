@@ -22,7 +22,7 @@ export default class SlackController {
 
     if (!Flow) {
       stop = true;
-      message = 'Please enter valid instructions.'
+      message = 'ok'
     }
 
     if (!stop) {
