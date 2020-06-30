@@ -23,15 +23,15 @@
   },
   "homepage": "https://github.com/codelittinc/github-pr-notifications#readme",
   "dependencies": {
-    "@codelittinc/health-monitor-node": "1.0.2",
+    "@codelittinc/health-monitor-node": "^1.0.2",
+    "@codelittinc/slack-notifications-client": "^1.0.0",
     "@octokit/rest": "^17.11.2",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "moment": "^2.27.0",
-    "mongodb": "^3.5.9",
-    "slack-notifications-client": "git://github.com/codelittinc/slack-notifications-client.git"
+    "mongodb": "^3.5.9"
   },
   "devDependencies": {
     "expect": "^25.5.0",

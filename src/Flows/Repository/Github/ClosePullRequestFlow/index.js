@@ -1,6 +1,7 @@
-import { Repositories, Reactji, Github, ChannelMessage, DirectMessage } from '@services'
+import { Slack, Repositories, Reactji, Github, ChannelMessage, DirectMessage } from '@services'
 import { PullRequest, Commit } from '@models';
 import pullRequestParser from '../parsers/pullRequestParser'
+import sendJiraConfirmation from './sendJiraConfirmation';
 
 class ClosePullRequestFlow {
   static async start(json) {
@@ -15,6 +16,25 @@ class ClosePullRequestFlow {
     const repositoryData = await Repositories.getRepositoryData(pr.repositoryName)
 
     const { devGroup, channel } = repositoryData;
+
+    const { body: prBody } = await Github.getPullRequest({ pullRequestId: pr.ghId, owner: pr.owner, repository: pr.repositoryName })
+
+    const mentionRegex = new RegExp(/http.*atlassian.*/g);
+    let z;
+    const jiraLinks = []
+    while (null != (z = mentionRegex.exec(prBody))) {
+      jiraLinks.push(z[0])
+    }
+
+    try {
+      jiraLinks.forEach((link) => {
+        console.log("Sending jira update message", pr.ghId, link, pr.username)
+        sendJiraConfirmation(pr.ghId, link, pr.username)
+        console.log("Message sent")
+      });
+    } catch (e) {
+      console.log(e)
+    }
 
     await pr.close()
 

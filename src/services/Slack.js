@@ -1,4 +1,4 @@
-import SlackNotificationsClient from 'slack-notifications-client';
+import SlackNotificationsClient from '@codelittinc/slack-notifications-client';
 
 class Slack {
   static getInstance() {
