@@ -37,6 +37,7 @@ const PORT = process.env.PORT || 3000;
 
 app.get('/', HomeController.index);
 app.get(`/open-prs/:devGroup?`, PullRequestsController.index);
+app.get(`/pull-requests/:id/:repositoryName`, PullRequestsController.get);
 
 app.post('/', FlowsController.create);
 app.post('/flows', FlowsController.create);

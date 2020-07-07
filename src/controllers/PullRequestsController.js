@@ -26,7 +26,19 @@ export default class PullRequestsController {
       data,
     })
   }
+
+  static async get(req, res) {
+    const { id, repositoryName } = req.params;
+    const pr = await PullRequest.findBy({ghId: Number.parseInt(id), repositoryName})
+    await pr.getMainSlackMessage();
+    await pr.getReviews();
+    await pr.getChanges();
+    res.send({
+      ...pr
+    })
+  }
 }
+
 
 const getPullRequestsJSON = async (prs) => {
   await Promise.all(prs.map(pr => pr.getReviews()));
