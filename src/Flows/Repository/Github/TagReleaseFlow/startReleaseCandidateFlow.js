@@ -1,22 +1,23 @@
 import { Github, GithubCommits, Slack } from '../../../../services/index.js'
+import pry from 'pry';
 
 export default async (deployChannel, latestRelease = {}, owner, repository) => {
-  const DEFAULT_TAG_NAME = 'v0.0.0-rc.0';
+  const DEFAULT_TAG_NAME = 'rc.0.v0.0.0';
   const { tag_name = DEFAULT_TAG_NAME } = latestRelease;
   const isBasedOnRelease = !tag_name.match('rc')
 
   let baseTagVersion = tag_name.match(/\d+\.\d+\.\d+/)[0]
-  let newReleaseCandidateVersion = 0;
+  let newReleaseCandidateVersion = 1;
 
   if (isBasedOnRelease) {
     let [major, minor, patch] = baseTagVersion.split('.')
     baseTagVersion = [major, minor, Number.parseInt(patch) + 1].join('.')
   } else {
-    const currentReleaseCandidateVersion = tag_name.match(/\d+$/)
+    const currentReleaseCandidateVersion = tag_name.match(/rc\.(\d+)/)[1]
     newReleaseCandidateVersion = Number.parseInt(currentReleaseCandidateVersion) + 1;
   }
 
-  const newTagVersion = `v${baseTagVersion}-rc${newReleaseCandidateVersion}`;
+  const newTagVersion = `rc.${newReleaseCandidateVersion}.v${baseTagVersion}`;
 
   let slackMessage = 'Available in this release:';
   let commitsMessage;
