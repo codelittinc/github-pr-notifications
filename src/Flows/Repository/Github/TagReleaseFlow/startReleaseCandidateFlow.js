@@ -1,5 +1,4 @@
 import { Github, GithubCommits, Slack } from '../../../../services/index.js'
-import pry from 'pry';
 
 export default async (deployChannel, latestRelease = {}, owner, repository) => {
   const DEFAULT_TAG_NAME = 'rc.0.v0.0.0';
