@@ -12,7 +12,7 @@ export default async (deployChannel, latestRelease = {}, owner, repository) => {
     let [major, minor, patch] = baseTagVersion.split('.')
     baseTagVersion = [major, minor, Number.parseInt(patch) + 1].join('.')
   } else {
-    const currentReleaseCandidateVersion = tag_name.match(/rc\.?(\d+)/)[1]
+    const currentReleaseCandidateVersion = tag_name.match(/rc.?(\d+)/)[1]
     newReleaseCandidateVersion = Number.parseInt(currentReleaseCandidateVersion) + 1;
   }
 
