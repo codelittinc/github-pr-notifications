@@ -19,23 +19,6 @@ class ClosePullRequestFlow {
 
     const { body: prBody } = await Github.getPullRequest({ pullRequestId: pr.ghId, owner: pr.owner, repository: pr.repositoryName })
 
-    const mentionRegex = new RegExp(/http.*atlassian.*/g);
-    let z;
-    const jiraLinks = []
-    while (null != (z = mentionRegex.exec(prBody))) {
-      jiraLinks.push(z[0])
-    }
-
-    try {
-      jiraLinks.forEach((link) => {
-        console.log("Sending jira update message", pr.ghId, link, pr.username)
-        sendJiraConfirmation(pr.ghId, link, pr.username)
-        console.log("Message sent")
-      });
-    } catch (e) {
-      console.log(e)
-    }
-
     await pr.close()
 
     const ghCommits = await Github.getCommits(pr.ghId, pr.owner, pr.repositoryName);
@@ -68,6 +51,23 @@ class ClosePullRequestFlow {
 
     const directMessage = new DirectMessage(pr.username)
     directMessage.notifyPRMerge(pr)
+
+    const mentionRegex = new RegExp(/http.*atlassian.*/g);
+    let z;
+    const jiraLinks = []
+    while (null != (z = mentionRegex.exec(prBody))) {
+      jiraLinks.push(z[0])
+    }
+
+    try {
+      jiraLinks.forEach((link) => {
+        console.log("Sending jira update message", pr.ghId, link, pr.username)
+        sendJiraConfirmation(pr.ghId, link, pr.username)
+        console.log("Message sent")
+      });
+    } catch (e) {
+      console.log(e)
+    }
   };
 
   static async isFlow(json) {
