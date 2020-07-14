@@ -38,8 +38,6 @@ class ClosePullRequestFlow {
       }).create();
     })
 
-    await (new ChannelMessage(channel, mainSlackMessage.ts)).closePullRequest(devGroup, pr.link)
-
     const reactji = new Reactji(mainSlackMessage.ts, 'closed', channel, 'flow')
     reactji.react();
 

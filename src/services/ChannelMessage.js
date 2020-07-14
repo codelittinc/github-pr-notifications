@@ -7,16 +7,6 @@ class ChannelMessage {
     this.ts = ts;
   }
 
-  async requestReview(devGroup, link) {
-    const message = `${devGroup} :point_right:  please review this new PR: ${link}`;
-    return await this.send(message)
-  }
-
-  async closePullRequest(devGroup, link) {
-    const message = `~${devGroup} :point_right:  please review this new PR: ${link} .~`;
-    return await this.update(message)
-  }
-
   async notifyChangesRequest() {
     const message = `${SlackReaction.warning.forMessage()} changes requested!`;
     return await this.send(message)
