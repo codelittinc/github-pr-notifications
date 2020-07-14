@@ -13,7 +13,7 @@ class PullRequest extends BaseModel {
   }
 
   async getMainSlackMessage() {
-    this.mainSlackMessage = await SlackMessage.findByPRId(this.ghId)
+    this.mainSlackMessage = await SlackMessage.findByPRId(this.ghId, this.repositoryName)
     return this.mainSlackMessage;
   }
 
