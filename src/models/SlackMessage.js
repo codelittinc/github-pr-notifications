@@ -7,6 +7,9 @@ class SlackMessage extends BaseModel {
   static async findByPRId(prId, repository) {
     const result = await axios.get(`http://roadrunner-rails.herokuapp.com/slack_messages/${prId}/${repository}`);
     const { data } = result;
+    if (!data) {
+      return null;
+    }
     const d = {
       ...data,
       ghId: data.pull_request_id
