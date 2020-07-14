@@ -26,7 +26,7 @@ class TagReleaseFlow {
 
     if (environment === 'qa') {
       await startReleaseCandidateFlow(channel_name, latestRelease, owner, repository)
-    } else {
+    } else if (environment === 'prod'){
       await startReleaseFlow(channel_name, releases, latestRelease, owner, repository)
     }
 
