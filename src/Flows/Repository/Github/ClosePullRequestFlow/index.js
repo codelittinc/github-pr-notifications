@@ -40,12 +40,6 @@ class ClosePullRequestFlow {
 
     await (new ChannelMessage(channel, mainSlackMessage.ts)).closePullRequest(devGroup, pr.link)
 
-    await Github.deleteBranch({
-      owner: pr.owner,
-      repo: pr.repositoryName,
-      ref: pr.branchName,
-    });
-
     const reactji = new Reactji(mainSlackMessage.ts, 'closed', channel, 'flow')
     reactji.react();
 
