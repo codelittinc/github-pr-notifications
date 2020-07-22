@@ -24,9 +24,11 @@ class TagReleaseFlow {
       channel: channel_name 
     });
 
-    if (environment === 'qa') {
-      await startReleaseCandidateFlow(channel_name, latestRelease, owner, repository)
-    } else if (environment === 'prod'){
+    // if (environment === 'qa') {
+    //   await startReleaseCandidateFlow(channel_name, latestRelease, owner, repository)
+    // } else
+
+    if (environment === 'prod'){
       await startReleaseFlow(channel_name, releases, latestRelease, owner, repository)
     }
 
