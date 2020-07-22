@@ -28,9 +28,9 @@ class TagReleaseFlow {
     //   await startReleaseCandidateFlow(channel_name, latestRelease, owner, repository)
     // } else
 
-    if (environment === 'prod'){
-      await startReleaseFlow(channel_name, releases, latestRelease, owner, repository)
-    }
+//    if (environment === 'prod'){
+//      await startReleaseFlow(channel_name, releases, latestRelease, owner, repository)
+//    }
 
     if (callback) {
       callback()
