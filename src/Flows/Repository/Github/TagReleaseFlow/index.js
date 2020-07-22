@@ -19,10 +19,10 @@ class TagReleaseFlow {
 
     const latestRelease = releases[0];
 
-    Slack.getInstance().sendMessage({
-      message: `Deployment process to *${environment.toUpperCase()}* process started by @${user_name}`,
-      channel: channel_name 
-    });
+//    Slack.getInstance().sendMessage({
+//      message: `Deployment process to *${environment.toUpperCase()}* process started by @${user_name}`,
+//      channel: channel_name 
+//    });
 
     // if (environment === 'qa') {
     //   await startReleaseCandidateFlow(channel_name, latestRelease, owner, repository)
