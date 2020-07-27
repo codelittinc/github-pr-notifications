@@ -5,7 +5,6 @@ import NewReviewSubmissionFlow from './NewReviewSubmissionFlow';
 import SendChangelogFlow from './SendChangelogFlow';
 import CheckRunFlow from './CheckRunFlow';
 import ReleaseFlow from './ReleaseFlow';
-import TagReleaseFlow from './TagReleaseFlow';
 import RepositoryDiffFlow from './RepositoryDiffFlow';
 import NewPullRequestDirectCommentFlow from './NewPullRequestDirectCommentFlow';
 
@@ -23,7 +22,6 @@ class GithubFlow {
       SendChangelogFlow,
       CheckRunFlow,
       ReleaseFlow,
-      TagReleaseFlow,
       NewPullRequestDirectCommentFlow,
       RepositoryDiffFlow,
     ];
