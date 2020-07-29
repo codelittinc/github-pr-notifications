@@ -23,9 +23,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use((req, _, next) => {
   const isPost = req.method == "POST";
   if (isPost) {
-    const { body } = req;
+    const { body, _parsedUrl } = req;
+    const { search } = _parsedUrl
     try {
-      axios.post("http://roadrunner-rails.herokuapp.com/flows", body)
+      let url = `http://roadrunner-rails.herokuapp.com/flows`
+      if (search) {
+      url = `http://roadrunner-rails.herokuapp.com/flows${search}`
+
+      }
+      axios.post(url, body)
     } catch (e) { }
   }
   next()
