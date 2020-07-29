@@ -37,7 +37,7 @@ class NotifyDeploymentFlow {
   }
 
   isFlow() {
-    return !!this.data.app || (!!this.data.data && this.data.data.app);
+    return false
   };
 }
 
