@@ -34,9 +34,6 @@ class ClosePullRequestFlow {
         authorName: name,
       }).create();
     })
-
-    const reactji = new Reactji(mainSlackMessage.ts, 'closed', channel, 'flow')
-    reactji.react();
   };
 
   static async isFlow(json) {
