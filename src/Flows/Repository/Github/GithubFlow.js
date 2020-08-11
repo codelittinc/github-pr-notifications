@@ -6,7 +6,6 @@ import SendChangelogFlow from './SendChangelogFlow';
 import CheckRunFlow from './CheckRunFlow';
 import ReleaseFlow from './ReleaseFlow';
 import RepositoryDiffFlow from './RepositoryDiffFlow';
-import NewPullRequestDirectCommentFlow from './NewPullRequestDirectCommentFlow';
 
 class GithubFlow {
   constructor(data) {
@@ -22,7 +21,6 @@ class GithubFlow {
       SendChangelogFlow,
       CheckRunFlow,
       ReleaseFlow,
-      NewPullRequestDirectCommentFlow,
       RepositoryDiffFlow,
     ];
 
