@@ -2,7 +2,6 @@ import NewPullRequestFlow from './NewPullRequestFlow';
 import ClosePullRequestFlow from './ClosePullRequestFlow';
 import NewReviewSubmissionFlow from './NewReviewSubmissionFlow';
 import SendChangelogFlow from './SendChangelogFlow';
-import CheckRunFlow from './CheckRunFlow';
 import ReleaseFlow from './ReleaseFlow';
 import RepositoryDiffFlow from './RepositoryDiffFlow';
 
@@ -17,7 +16,6 @@ class GithubFlow {
       ClosePullRequestFlow,
       NewReviewSubmissionFlow,
       SendChangelogFlow,
-      CheckRunFlow,
       ReleaseFlow,
       RepositoryDiffFlow,
     ];
