@@ -1,6 +1,5 @@
 import NewPullRequestFlow from './NewPullRequestFlow';
 import ClosePullRequestFlow from './ClosePullRequestFlow';
-import NewReviewSubmissionFlow from './NewReviewSubmissionFlow';
 import SendChangelogFlow from './SendChangelogFlow';
 import ReleaseFlow from './ReleaseFlow';
 import RepositoryDiffFlow from './RepositoryDiffFlow';
@@ -14,7 +13,6 @@ class GithubFlow {
     const flows = [
       NewPullRequestFlow,
       ClosePullRequestFlow,
-      NewReviewSubmissionFlow,
       SendChangelogFlow,
       ReleaseFlow,
       RepositoryDiffFlow,
